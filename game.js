@@ -2,6 +2,7 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Game = Asteroids.Game = function(ctx) {
+    this.score = 0;
     this.timer = 0;
     this.ctx = ctx;
     this.asteroids = [];
@@ -14,9 +15,6 @@
   Game.DIM_Y = 500;
 
   var img = new Image();
-  // img.onload = function() {
-//     ctx.drawImage(img, 0,0);
-//   };
   img.src = 'space.jpg';
 
   Game.prototype.addAsteroids = function(numAsteroids) {
@@ -36,10 +34,13 @@
   Game.prototype.removeAsteroid = function(asteroid) {
 
     if (asteroid.size === 1) {
+      this.score += 10;
       var child1 = new Asteroids.AsteroidSmall([asteroid.pos[0]+8, asteroid.pos[1]+6], [asteroid.vel[0], asteroid.vel[1]]);
       var child2 = new Asteroids.AsteroidSmall([asteroid.pos[0]-8, asteroid.pos[1]-6], [asteroid.vel[0]* -1, asteroid.vel[1]* -1]);
       this.asteroids.push(child1);
       this.asteroids.push(child2);
+    } else {
+      this.score += 5;
     }
 
     var index = this.asteroids.indexOf(asteroid);
@@ -50,6 +51,15 @@
   Game.prototype.removeBullet = function(bullet) {
     var index = this.bullets.indexOf(bullet);
     this.bullets.splice(index, 1);
+  }
+
+  Game.prototype.drawScore = function() {
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "20pt Arial";
+    this.ctx.textAlign = "right"
+    this.ctx.textBaseline = "top";
+    this.ctx.beginPath();
+    this.ctx.fillText("Score: " + this.score, Game.DIM_X - 25,0);
   }
 
   Game.prototype.draw = function(){
@@ -64,6 +74,7 @@
       bullet.draw(that.ctx);
     });
     this.ship.draw(that.ctx);
+    this.drawScore();
   }
 
   Game.prototype.move = function(){
