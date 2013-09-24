@@ -22,7 +22,7 @@
 
   Asteroid.randomAsteroid = function(dimX, dimY) {
     startPos = randomPosition(dimX, dimY, 1);
-    random_velocity = (Math.random() * 2 - 1) / 10
+    random_velocity = (Math.random() * 2 - 1) / 40
     startVel = randomPosition(dimX, dimY, random_velocity);
     return new Asteroid(startPos, startVel);
   }
