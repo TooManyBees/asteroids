@@ -26,8 +26,17 @@
   }
 
   Game.prototype.removeAsteroid = function(asteroid) {
+
+    if (asteroid.size === 1) {
+      var child1 = new Asteroids.AsteroidSmall([asteroid.pos[0]+8, asteroid.pos[1]+6], [asteroid.vel[0], asteroid.vel[1]]);
+      var child2 = new Asteroids.AsteroidSmall([asteroid.pos[0]-8, asteroid.pos[1]-6], [asteroid.vel[0]* -1, asteroid.vel[1]* -1]);
+      this.asteroids.push(child1);
+      this.asteroids.push(child2);
+    }
+
     var index = this.asteroids.indexOf(asteroid);
     this.asteroids.splice(index, 1);
+
   }
 
   Game.prototype.removeBullet = function(bullet) {
@@ -65,6 +74,7 @@
     that = this;
     this.asteroids.forEach(function(asteroid) {
       if (asteroid.isCollidedWith(that.ship)) {
+        asteroid.bounce()
         that.ship.lives -= 1;
         if (that.ship.lives === 0) {
           alert("You died, repeatedly.");
@@ -75,6 +85,18 @@
         }
       }
     });
+
+    for (asteroid1 in this.asteroids) {
+      for (asteroid2 in this.asteroids) {
+        if (asteroid1 !== asteroid2) {
+          if (this.asteroids[asteroid1].isCollidedWith(this.asteroids[asteroid2])) {
+            this.asteroids[asteroid1].bounce()
+            break;
+          }
+        }
+      }
+    }
+
     this.bullets.forEach(function(bullet) {
       bullet.hitAsteroids();
     });
@@ -86,7 +108,15 @@
     }
   }
 
+  Game.prototype.checkWinCondition = function() {
+    if (this.asteroids.length === 0) {
+      this.stop();
+      alert("You win.");
+    }
+  }
+
   Game.prototype.step = function (){
+    this.checkWinCondition();
     this.move();
     this.draw();
     this.checkCollisions();

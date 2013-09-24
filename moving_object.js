@@ -7,9 +7,13 @@
     this.vel = vel;
     this.radius = radius;
     this.color = color;
+    this.bounce_window = 0;
   }
 
   MovingObject.prototype.move = function(maxX, maxY) {
+    if (this.bounce_window > 0) {
+      this.bounce_window -= 1;
+    }
     this.pos[0] += this.vel[0];
     if (this.pos[0] < 0) {
       this.pos[0] += maxX;
@@ -47,7 +51,8 @@
     dY = this.pos[1] - otherObject.pos[1];
     distance = Math.pow(Math.pow(dX,2) + Math.pow(dY, 2), 0.5);
 
-    if (distance <= (this.radius + otherObject.radius)) {
+    if ((this.bounce_window === 0) && (distance <= (this.radius + otherObject.radius))) {
+      this.bounce_window = 3
       return true;
     }
     return false;
