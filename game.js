@@ -2,8 +2,10 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Game = Asteroids.Game = function(ctx) {
+    this.timer = 0;
     this.ctx = ctx;
     this.asteroids= [];
+    this.addAsteroids(10);
     this.ship = new Asteroids.Ship([Game.DIM_X / 2, Game.DIM_Y / 2],[0,0]);
   }
 
@@ -48,8 +50,11 @@
   }
 
   Game.prototype.start = function (){
-    this.addAsteroids(10);
-    setInterval(this.step.bind(this), 33);
+    this.timer = setInterval(this.step.bind(this), 33);
+  }
+
+  Game.prototype.stop = function () {
+    clearInterval(this.timer);
   }
 
 })(this);
