@@ -52,7 +52,6 @@
     distance = Math.pow(Math.pow(dX,2) + Math.pow(dY, 2), 0.5);
 
     if ((this.bounce_window === 0) && (distance <= (this.radius + otherObject.radius))) {
-      this.bounce_window = 3
       return true;
     }
     return false;

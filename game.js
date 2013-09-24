@@ -6,8 +6,8 @@
     this.ctx = ctx;
     this.asteroids = [];
     this.bullets = [];
-    this.addAsteroids(10);
     this.ship = new Asteroids.Ship([Game.DIM_X / 2, Game.DIM_Y / 2],[0,0]);
+    this.addAsteroids(10);
   }
 
   Game.DIM_X = 500;
@@ -21,7 +21,15 @@
 
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i = 0; i < numAsteroids; i++) {
-      this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
+      newAsteroid = Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y)
+      if (this.asteroids.some(function(asteroid) {
+        return newAsteroid.isCollidedWith(asteroid);
+          }) || newAsteroid.isCollidedWith(this.ship)) {
+        console.log("retrying");
+        i--;
+      } else {
+        this.asteroids.push(newAsteroid);
+      }
     }
   }
 
