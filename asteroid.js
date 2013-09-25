@@ -29,10 +29,15 @@
     return [Math.random() * dimX * ratio, Math.random() * dimY * ratio];
   }
 
+  var randomVelocity = function(max, min) {
+    randomAngle = Math.random() * 2 * Math.PI;
+    s = Math.random() * (max - min) + min
+    return [Math.cos(randomAngle)*s, Math.sin(randomAngle)*s];
+  }
+
   Asteroid.randomAsteroid = function(dimX, dimY) {
     startPos = randomPosition(dimX, dimY, 1);
-    random_velocity = (Math.random() * 2 - 1) / 40
-    startVel = randomPosition(dimX, dimY, random_velocity);
+    startVel = randomVelocity(2,1);
     return new Asteroid(startPos, startVel);
   }
 
