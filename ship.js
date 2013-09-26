@@ -26,7 +26,7 @@
   }
 
   Ship.prototype.rotate = function(angle) {
-    this.heading += angle * Math.PI/60;
+    this.heading += angle * Math.PI/30;
   }
 
   Ship.prototype.fireBullet = function(game) {
@@ -41,9 +41,8 @@
 
   Ship.prototype.draw = function(ctx) {
     ship = this;
-    // Asteroids.MovingObject.prototype.draw.call(this, ctx);
-    ctx.save()
 
+    ctx.save()
     ctx.fillStyle = this.color;
 
     ctx.translate(ship.pos[0], ship.pos[1]);

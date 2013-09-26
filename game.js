@@ -125,6 +125,7 @@
   Game.prototype.fireBullet = function () {
     if (this.ship.shotCooldown <= 0) {
       this.bullets.push(this.ship.fireBullet(this));
+      this.ship.shotCooldown = 10;
     }
   }
 
@@ -136,7 +137,6 @@
   }
 
   Game.prototype.listenForKeys = function() {
-    // yowzers! decouple from framrate, why don't ya!
     if (key.isPressed('w')) this.ship.power(1);
     if (key.isPressed('a')) this.ship.rotate(-1);
     if (key.isPressed('d')) this.ship.rotate(1);
@@ -144,10 +144,12 @@
   };
 
   Game.prototype.step = function (){
+    //todo: move ticking down ship statuses to separate method
+    this.ship.shotCooldown -= 1;
     this.listenForKeys();
-    this.checkWinCondition();
     this.move();
     this.draw();
+    this.checkWinCondition();
     this.checkCollisions();
   }
 
@@ -160,7 +162,6 @@
   }
 
   Game.prototype.start = function (){
-    // this.bindKeyHandlers();
     this.timer = setInterval(this.step.bind(this), 33);
   }
 
