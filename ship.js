@@ -40,6 +40,9 @@
   }
 
   Ship.prototype.draw = function(ctx) {
+    if (this.timers.mercy % 4 != 0) {
+      return;
+    }
     ship = this;
 
     ctx.save()

@@ -101,7 +101,7 @@
         } else {
           that.ship.pos = [Game.DIM_X/2, Game.DIM_Y/2];
           that.ship.vel = [0,0];
-          that.ship.timers['mercy'] = 11;
+          that.ship.timers['mercy'] = 30;
         }
       }
     });

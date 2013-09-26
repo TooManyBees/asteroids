@@ -48,7 +48,6 @@
   Asteroid.prototype.bounce = function() {
     this.vel[0] *= -1;
     this.vel[1] *= -1;
-    this.bounce_window = 5;
   }
 
 })(this);
