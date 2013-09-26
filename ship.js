@@ -57,21 +57,22 @@
     ctx.fill();
     ctx.restore();
 
-    // ctx.fillStyle = this.color;
-    // ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
 
-    // for (var i = 0; i < this.lives; i++) {
-
-    //   ctx.arc(
-    //     (i + 1) * 30,
-    //     15,
-    //     this.radius,
-    //     0,
-    //     2 * Math.PI,
-    //     false
-    //   );
-    //   ctx.fill();
-    // }
+    ctx.save();
+    // Draw life sigils
+    for (var i = 0; i < this.lives; i++) {
+      ctx.beginPath();
+      ctx.moveTo(20,10);
+      ctx.lineTo(30,20);
+      ctx.lineTo(20,30);
+      ctx.lineTo(10,20);
+      ctx.closePath();
+      ctx.fill();
+      ctx.translate(20, 0);
+    }
+    ctx.restore();
   }
 
 })(this);
