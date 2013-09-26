@@ -7,13 +7,23 @@
     this.vel = vel;
     this.radius = radius;
     this.color = color;
-    this.bounce_window = 0;
+    this.timers = {
+      mercy : 0
+    }
+  }
+
+  MovingObject.prototype.tick = function() {
+    timers = this.timers;
+    Object.keys(timers).forEach(function(key) {
+      if (timers[key] > 0) {
+        timers[key] -= 1;
+      }
+    });
   }
 
   MovingObject.prototype.move = function(maxX, maxY) {
-    if (this.bounce_window > 0) {
-      this.bounce_window -= 1;
-    }
+    this.tick();
+
     this.pos[0] += this.vel[0];
     if (this.pos[0] < 0) {
       this.pos[0] += maxX;
@@ -31,9 +41,10 @@
   }
 
   MovingObject.prototype.draw = function(ctx) {
-    // if (this.bounce_window % 2 === 1) {
-    //   return;
-    // }
+    if (this.timers.mercy % 4 != 0) {
+      return;
+    }
+
     ctx.fillStyle = this.color;
     ctx.beginPath();
 
@@ -54,7 +65,7 @@
     dY = this.pos[1] - otherObject.pos[1];
     distance = Math.pow(Math.pow(dX,2) + Math.pow(dY, 2), 0.5);
 
-    if ((this.bounce_window === 0) && (distance <= (this.radius + otherObject.radius))) {
+    if ((this.timers['mercy'] === 0) && (distance <= (this.radius + otherObject.radius))) {
       return true;
     }
     return false;

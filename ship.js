@@ -9,9 +9,9 @@
 
   var Ship = Asteroids.Ship = function(pos, vel) {
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
+    this.timers.shot = 0;
     this.lives = 3;
     this.heading = Math.PI / 2;
-    this.shotCooldown = 0;
   }
 
   Ship.RADIUS = 6;

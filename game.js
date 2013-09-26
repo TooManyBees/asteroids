@@ -101,7 +101,7 @@
         } else {
           that.ship.pos = [Game.DIM_X/2, Game.DIM_Y/2];
           that.ship.vel = [0,0];
-          that.ship.bounce_window = 11;
+          that.ship.timers['mercy'] = 11;
         }
       }
     });
@@ -123,9 +123,9 @@
   }
 
   Game.prototype.fireBullet = function () {
-    if (this.ship.shotCooldown <= 0) {
+    if (this.ship.timers['shot'] <= 0) {
       this.bullets.push(this.ship.fireBullet(this));
-      this.ship.shotCooldown = 10;
+      this.ship.timers['shot'] = 10;
     }
   }
 
@@ -145,7 +145,6 @@
 
   Game.prototype.step = function (){
     //todo: move ticking down ship statuses to separate method
-    this.ship.shotCooldown -= 1;
     this.listenForKeys();
     this.move();
     this.draw();
