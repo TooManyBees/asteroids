@@ -33,14 +33,13 @@
 
   Game.prototype.removeAsteroid = function(asteroid) {
 
+    this.score += asteroid.score;
+
     if (asteroid.size === 1) {
-      this.score += 10;
       var child1 = new Asteroids.AsteroidSmall([asteroid.pos[0]+8, asteroid.pos[1]+6], [asteroid.vel[0], asteroid.vel[1]]);
       var child2 = new Asteroids.AsteroidSmall([asteroid.pos[0]-8, asteroid.pos[1]-6], [asteroid.vel[0]* -1, asteroid.vel[1]* -1]);
       this.asteroids.push(child1);
       this.asteroids.push(child2);
-    } else {
-      this.score += 5;
     }
 
     var index = this.asteroids.indexOf(asteroid);

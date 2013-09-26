@@ -24,7 +24,7 @@
   Asteroid.RADIUS_BIG = 15;
   Asteroid.RADIUS_SMALL = 10;
   Asteroid.SCORE = 10;
-  Asteroid.SCORE_SMALL = 15
+  Asteroid.SCORE_SMALL = 5
 
   Asteroid.inherits(Asteroids.MovingObject);
   AsteroidSmall.inherits(Asteroids.Asteroid);
@@ -43,6 +43,10 @@
     startPos = randomPosition(dimX, dimY, 1);
     startVel = randomVelocity(2,1);
     return new Asteroid(startPos, startVel);
+  }
+
+  Asteroid.prototype.break = function() {
+
   }
 
   Asteroid.prototype.bounce = function() {
