@@ -123,7 +123,7 @@
   }
 
   Game.prototype.fireBullet = function () {
-    if (this.ship.shotCooldown <== 0) {
+    if (this.ship.shotCooldown <= 0) {
       this.bullets.push(this.ship.fireBullet(this));
     }
   }
