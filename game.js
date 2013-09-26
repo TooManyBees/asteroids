@@ -123,9 +123,7 @@
   }
 
   Game.prototype.fireBullet = function () {
-    if (this.ship.vel.join('') !== '00') {
-      this.bullets.push(this.ship.fireBullet(this));
-    }
+    this.bullets.push(this.ship.fireBullet(this));
   }
 
   Game.prototype.checkWinCondition = function() {
@@ -144,10 +142,9 @@
 
   Game.prototype.bindKeyHandlers = function() {
     that = this;
-    key('w', function(){ that.ship.power([0,-1]); });
-    key('a', function(){ that.ship.power([-1,0]); });
-    key('s', function(){ that.ship.power([0,1]); });
-    key('d', function(){ that.ship.power([1,0]); });
+    key('w', function(){ that.ship.power(1); });
+    key('a', function(){ that.ship.rotate(1); });
+    key('d', function(){ that.ship.rotate(-1); });
     key('space', function(){ that.fireBullet(); });
   }
 

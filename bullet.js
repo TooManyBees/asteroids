@@ -21,7 +21,6 @@
   Bullet.prototype.move = function(maxX, maxY) {
     this.lifetime -= 1;
     if (this.lifetime <= 0) {
-      console.log("bullet expired")
       this.game.removeBullet(this);
     } else {
       Asteroids.MovingObject.prototype.move.call(this, maxX, maxY);
