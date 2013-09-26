@@ -11,6 +11,7 @@
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
     this.lives = 3;
     this.heading = Math.PI / 2;
+    this.shotCooldown = 0;
   }
 
   Ship.RADIUS = 6;
@@ -20,12 +21,12 @@
 
   Ship.prototype.power = function(impulse) {
     ship = this;
-    this.vel[0] += Math.cos(ship.heading) * impulse;
-    this.vel[1] += Math.sin(ship.heading) * impulse;
+    this.vel[0] += Math.cos(ship.heading) * impulse / 10;
+    this.vel[1] += Math.sin(ship.heading) * impulse / 10;
   }
 
   Ship.prototype.rotate = function(angle) {
-    this.heading += angle * Math.PI/30;
+    this.heading += angle * Math.PI/60;
   }
 
   Ship.prototype.fireBullet = function(game) {

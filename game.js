@@ -123,7 +123,9 @@
   }
 
   Game.prototype.fireBullet = function () {
-    this.bullets.push(this.ship.fireBullet(this));
+    if (this.ship.shotCooldown <== 0) {
+      this.bullets.push(this.ship.fireBullet(this));
+    }
   }
 
   Game.prototype.checkWinCondition = function() {
@@ -133,7 +135,16 @@
     }
   }
 
+  Game.prototype.listenForKeys = function() {
+    // yowzers! decouple from framrate, why don't ya!
+    if (key.isPressed('w')) this.ship.power(1);
+    if (key.isPressed('a')) this.ship.rotate(-1);
+    if (key.isPressed('d')) this.ship.rotate(1);
+    if (key.isPressed('space')) this.fireBullet();
+  };
+
   Game.prototype.step = function (){
+    this.listenForKeys();
     this.checkWinCondition();
     this.move();
     this.draw();
@@ -149,7 +160,7 @@
   }
 
   Game.prototype.start = function (){
-    this.bindKeyHandlers();
+    // this.bindKeyHandlers();
     this.timer = setInterval(this.step.bind(this), 33);
   }
 
