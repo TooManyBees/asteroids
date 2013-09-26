@@ -19,12 +19,13 @@
   Ship.inherits(Asteroids.MovingObject);
 
   Ship.prototype.power = function(impulse) {
-    this.vel[0] += Math.acos(impulse);
-    this.vel[1] += Math.asin(impulse);
+    ship = this;
+    this.vel[0] += Math.cos(ship.heading) * impulse;
+    this.vel[1] += Math.sin(ship.heading) * impulse;
   }
 
   Ship.prototype.rotate = function(angle) {
-    this.heading += angle * Math.PI/60;
+    this.heading += angle * Math.PI/30;
   }
 
   Ship.prototype.fireBullet = function(game) {
