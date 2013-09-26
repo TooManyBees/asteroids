@@ -9,11 +9,13 @@
 
   var Asteroid = Asteroids.Asteroid = function(pos, vel) {
     this.size = 1;
+    this.score = Asteroid.SCORE;
     Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS_BIG, Asteroid.COLOR);
   }
 
   var AsteroidSmall = Asteroids.AsteroidSmall = function(pos, vel) {
     this.size = 2;
+    this.score = Asteroid.SCORE_SMALL;
     Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS_SMALL, Asteroid.COLOR_SMALL);
   }
 
@@ -21,6 +23,8 @@
   Asteroid.COLOR_SMALL = "orange";
   Asteroid.RADIUS_BIG = 15;
   Asteroid.RADIUS_SMALL = 10;
+  Asteroid.SCORE = 10;
+  Asteroid.SCORE_SMALL = 15
 
   Asteroid.inherits(Asteroids.MovingObject);
   AsteroidSmall.inherits(Asteroids.Asteroid);
@@ -44,7 +48,7 @@
   Asteroid.prototype.bounce = function() {
     this.vel[0] *= -1;
     this.vel[1] *= -1;
-    this.bounce_window = 3;
+    this.bounce_window = 5;
   }
 
 })(this);

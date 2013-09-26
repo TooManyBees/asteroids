@@ -101,20 +101,21 @@
         } else {
           that.ship.pos = [Game.DIM_X/2, Game.DIM_Y/2];
           that.ship.vel = [0,0];
+          that.ship.bounce_window = 11;
         }
       }
     });
 
-    for (asteroid1 in this.asteroids) {
-      for (asteroid2 in this.asteroids) {
-        if (asteroid1 !== asteroid2) {
-          if (this.asteroids[asteroid1].isCollidedWith(this.asteroids[asteroid2])) {
-            this.asteroids[asteroid1].bounce()
-            break;
-          }
-        }
-      }
-    }
+    // for (asteroid1 in this.asteroids) {
+    //   for (asteroid2 in this.asteroids) {
+    //     if (asteroid1 !== asteroid2) {
+    //       if (this.asteroids[asteroid1].isCollidedWith(this.asteroids[asteroid2])) {
+    //         this.asteroids[asteroid1].bounce()
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
 
     this.bullets.forEach(function(bullet) {
       bullet.hitAsteroids();

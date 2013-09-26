@@ -31,6 +31,9 @@
   }
 
   MovingObject.prototype.draw = function(ctx) {
+    // if (this.bounce_window % 2 === 1) {
+    //   return;
+    // }
     ctx.fillStyle = this.color;
     ctx.beginPath();
 
