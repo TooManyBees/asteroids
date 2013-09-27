@@ -33,9 +33,14 @@
 
   Ship.prototype.fireBullet = function(game) {
     var ship = this;
+    ship.timers.shot = ship.weapon.cooldown;
     var bPos = [ship.pos[0], ship.pos[1]];
     var bVelocity = this.weapon.getVelocity(ship.heading, ship.vel)
-    return new Asteroids.Bullet(bPos, bVelocity, game);
+    return new Asteroids.Bullet(bPos, bVelocity, {
+                                radius: ship.weapon.radius,
+                                color: ship.weapon.color,
+                                lifetime: ship.weapon.lifetime
+                                }, game);
   }
 
   Ship.prototype.draw = function(ctx) {

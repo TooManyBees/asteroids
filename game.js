@@ -32,8 +32,6 @@
   }
 
   Game.prototype.removeAsteroid = function(asteroid) {
-    console.log("Calling remove asteroid on ");
-    console.log(asteroid);
     that = this;
     that.score += asteroid.score;
 
@@ -127,7 +125,6 @@
   Game.prototype.fireBullet = function () {
     if (this.ship.timers['shot'] <= 0) {
       this.bullets.push(this.ship.fireBullet(this));
-      this.ship.timers['shot'] = 10;
     }
   }
 

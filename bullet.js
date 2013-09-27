@@ -7,10 +7,10 @@
     this.prototype = new Surrogate();
   }
 
-  var Bullet = Asteroids.Bullet = function(pos, vel, game) {
+  var Bullet = Asteroids.Bullet = function(pos, vel, config, game) {
     this.game = game;
-    this.lifetime = 100;
-    Asteroids.MovingObject.call(this, pos, vel, Bullet.RADIUS, Bullet.COLOR);
+    this.lifetime = config.lifetime;
+    Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
   }
 
   Bullet.inherits(Asteroids.MovingObject);
