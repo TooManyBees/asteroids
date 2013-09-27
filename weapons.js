@@ -28,4 +28,11 @@
     lifetime: 10
   }
 
+  Weapon.prototype.getVelocity = function(heading, shipVel) {
+    var velocity = [Math.cos(heading) * this.speed, Math.sin(heading) * this.speed];
+    velocity[0] += shipVel[0];
+    velocity[1] += shipVel[1];
+    return velocity;
+  }
+
 })(this);
