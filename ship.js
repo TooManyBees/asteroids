@@ -22,7 +22,7 @@
   Ship.inherits(Asteroids.MovingObject);
 
   Ship.prototype.power = function(impulse) {
-    ship = this;
+    var ship = this;
     this.vel[0] += Math.cos(ship.heading) * impulse / 10;
     this.vel[1] += Math.sin(ship.heading) * impulse / 10;
   }
@@ -32,12 +32,9 @@
   }
 
   Ship.prototype.fireBullet = function(game) {
-    var heading = this.heading;
-    var bMagnitude = 20;
-    var bVelocity = [Math.cos(heading) * bMagnitude, Math.sin(heading) * bMagnitude];
-    bVelocity[0] += this.vel[0];
-    bVelocity[1] += this.vel[1];
-    var bPos = [this.pos[0], this.pos[1]];
+    var ship = this;
+    var bPos = [ship.pos[0], ship.pos[1]];
+    var bVelocity = this.weapon.getVelocity(ship.heading, ship.vel)
     return new Asteroids.Bullet(bPos, bVelocity, game);
   }
 
@@ -45,7 +42,7 @@
     if (this.timers.mercy % 4 != 0) {
       return;
     }
-    ship = this;
+    var ship = this;
 
     ctx.save()
     ctx.fillStyle = this.color;
