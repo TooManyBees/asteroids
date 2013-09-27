@@ -32,18 +32,21 @@
   }
 
   Game.prototype.removeAsteroid = function(asteroid) {
+    console.log("Calling remove asteroid on ");
+    console.log(asteroid);
+    that = this;
+    that.score += asteroid.score;
 
-    this.score += asteroid.score;
-
-    if (asteroid.size === 1) {
-      var child1 = new Asteroids.AsteroidSmall([asteroid.pos[0]+8, asteroid.pos[1]+6], [asteroid.vel[0], asteroid.vel[1]]);
-      var child2 = new Asteroids.AsteroidSmall([asteroid.pos[0]-8, asteroid.pos[1]-6], [asteroid.vel[0]* -1, asteroid.vel[1]* -1]);
-      this.asteroids.push(child1);
-      this.asteroids.push(child2);
-    }
-
+    var babies = asteroid.break();
     var index = this.asteroids.indexOf(asteroid);
     this.asteroids.splice(index, 1);
+
+    if (babies.length > 0) {
+      babies.forEach(function(baby) {
+        console.log(baby);
+        that.asteroids.push(baby);
+      });
+    }
 
   }
 

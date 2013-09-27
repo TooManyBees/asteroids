@@ -41,7 +41,7 @@
   }
 
   MovingObject.prototype.draw = function(ctx) {
-    if (this.timers.mercy % 4 != 0) {
+    if (this.timers.mercy % 2 != 0) {
       return;
     }
 
@@ -65,7 +65,7 @@
     dY = this.pos[1] - otherObject.pos[1];
     distance = Math.pow(Math.pow(dX,2) + Math.pow(dY, 2), 0.5);
 
-    if ((this.timers['mercy'] === 0) && (distance <= (this.radius + otherObject.radius))) {
+    if ((this.timers.mercy === 0) && (distance <= (this.radius + otherObject.radius))) {
       return true;
     }
     return false;

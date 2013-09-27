@@ -7,27 +7,24 @@
     this.prototype = new Surrogate();
   }
 
-  var Asteroid = Asteroids.Asteroid = function(pos, vel) {
-    this.size = 1;
-    this.score = Asteroid.SCORE;
-    Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS_BIG, Asteroid.COLOR);
+  var Asteroid = Asteroids.Asteroid = function(pos, vel, config) {
+    this.score = config.score;
+    Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
   }
 
-  var AsteroidSmall = Asteroids.AsteroidSmall = function(pos, vel) {
-    this.size = 2;
-    this.score = Asteroid.SCORE_SMALL;
-    Asteroids.MovingObject.call(this, pos, vel, Asteroid.RADIUS_SMALL, Asteroid.COLOR_SMALL);
+  var DefaultAsteroid = Asteroids.DefaultAsteroid = {
+    color: "brown",
+    radius: 15,
+    score: 10
   }
 
-  Asteroid.COLOR = "brown";
-  Asteroid.COLOR_SMALL = "orange";
-  Asteroid.RADIUS_BIG = 15;
-  Asteroid.RADIUS_SMALL = 10;
-  Asteroid.SCORE = 10;
-  Asteroid.SCORE_SMALL = 5
+  var DefaultAsteroidSmall = Asteroids.DefaultAsteroidSmall = {
+    color: "orange",
+    radius: 10,
+    score: 5
+  }
 
   Asteroid.inherits(Asteroids.MovingObject);
-  AsteroidSmall.inherits(Asteroids.Asteroid);
 
   var randomPosition = function(dimX, dimY, ratio) {
     return [Math.random() * dimX * ratio, Math.random() * dimY * ratio];
@@ -42,11 +39,26 @@
   Asteroid.randomAsteroid = function(dimX, dimY) {
     startPos = randomPosition(dimX, dimY, 1);
     startVel = randomVelocity(2,1);
-    return new Asteroid(startPos, startVel);
+    return new Asteroid(startPos, startVel, Asteroids.DefaultAsteroid);
   }
 
   Asteroid.prototype.break = function() {
-
+    var babies = []
+    if (this.radius > 10) {
+      var child1 = new Asteroid(
+                      [this.pos[0], this.pos[1]],
+                      [this.vel[1], this.vel[0]],
+                      DefaultAsteroidSmall);
+      var child2 = new Asteroid(
+                      [this.pos[0], this.pos[1]],
+                      [-this.vel[1], -this.vel[0]],
+                      DefaultAsteroidSmall);
+      child1.timers.mercy = 9;
+      child2.timers.mercy = 9;
+      babies.push(child1);
+      babies.push(child2);
+    }
+    return babies;
   }
 
   Asteroid.prototype.bounce = function() {
