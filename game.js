@@ -39,7 +39,7 @@
 
     if (babies.length > 0) {
       babies.forEach(function(baby) {
-        baby.timers.mercy = 4;
+        baby.timers.mercy = Math.ceil(Asteroids.RATE / 2);
         that.asteroids.push(baby);
       });
     }
@@ -99,7 +99,7 @@
         } else {
           that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
           that.ship.vel = [0,0];
-          that.ship.timers['mercy'] = 30;
+          that.ship.timers.mercy = Asteroids.RATE * 3;
         }
       }
     });
@@ -150,7 +150,7 @@
 
   Game.prototype.resume = function (){
     this.paused = false;
-    this.timer = setInterval(this.step.bind(this), 33);
+    this.timer = setInterval(this.step.bind(this), Asteroids.RATE);
   }
 
   Game.prototype.stop = function () {

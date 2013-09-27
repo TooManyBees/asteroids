@@ -32,13 +32,14 @@
 
   var randomVelocity = function(max, min) {
     randomAngle = Math.random() * 2 * Math.PI;
-    s = Math.random() * (max - min) + min
+    s = (Math.random() * (max - min) + min)
     return [Math.cos(randomAngle)*s, Math.sin(randomAngle)*s];
   }
 
+  // TODO: Add a speedUp ratio to the calculations
   Asteroid.randomAsteroid = function(dimX, dimY) {
     startPos = randomPosition(dimX, dimY, 1);
-    startVel = randomVelocity(2,1);
+    startVel = randomVelocity(Asteroids.RATE / 16, Asteroids.RATE / 32);
     return new Asteroid(startPos, startVel, Asteroids.DefaultAsteroid);
   }
 

@@ -41,7 +41,7 @@
   }
 
   MovingObject.prototype.draw = function(ctx) {
-    if (this.timers.mercy % 2 != 0) {
+    if (this.timers.mercy % 4 != 0) {
       return;
     }
 

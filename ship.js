@@ -23,12 +23,12 @@
 
   Ship.prototype.power = function(impulse) {
     var ship = this;
-    this.vel[0] += Math.cos(ship.heading) * impulse / 10;
-    this.vel[1] += Math.sin(ship.heading) * impulse / 10;
+    this.vel[0] += Math.cos(ship.heading) * impulse / (2*Asteroids.RATE); // CHECK THIS
+    this.vel[1] += Math.sin(ship.heading) * impulse / (2*Asteroids.RATE);
   }
 
   Ship.prototype.rotate = function(angle) {
-    this.heading += angle * Math.PI/30;
+    this.heading += angle * (Math.PI * Asteroids.RATE / 1000); // 2 seconds per revolution
   }
 
   Ship.prototype.fireBullet = function(game) {

@@ -11,21 +11,30 @@
   }
 
   Weapon.STANDARD = {
-    cooldown: 10,
-    radius: 2,
-    damage: 2,
-    speed: 20,
+    cooldown: Math.floor(300 / Asteroids.RATE),
+    radius: 3,
+    damage: 3,
+    speed: Asteroids.RATE * 500 / 1000,
     color: 'green',
-    lifetime: 50
+    lifetime: Asteroids.RATE * 5
   }
 
   Weapon.FIRE = {
-    cooldown: 2,
+    cooldown: Math.floor(100 / Asteroids.RATE),
     radius: 8,
     damage: 2,
-    speed: 25,
+    speed: Asteroids.RATE * 825 / 1000,
     color: 'red',
-    lifetime: 10
+    lifetime: Math.floor(Asteroids.RATE * 0.75)
+  }
+
+  Weapon.BOMB = {
+    cooldown: Math.floor(900 / Asteroids.RATE),
+    radius: 10,
+    damage: 12,
+    speed: Asteroids.RATE * 100 / 1000,
+    color: 'cyan',
+    lifetime: Asteroids.RATE * 8
   }
 
   Weapon.prototype.getVelocity = function(heading, shipVel) {
@@ -34,5 +43,6 @@
     velocity[1] += shipVel[1];
     return velocity;
   }
+
 
 })(this);
