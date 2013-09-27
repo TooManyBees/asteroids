@@ -10,7 +10,7 @@
     this.color = config.color;
   }
 
-  var Weapon.STANDARD = {
+  Weapon.STANDARD = {
     cooldown: 10,
     radius: 2,
     damage: 2,
@@ -19,7 +19,7 @@
     lifetime: 50
   }
 
-  var Weapon.FIRE = {
+  Weapon.FIRE = {
     cooldown: 3,
     radius: 5,
     damage: 2,
