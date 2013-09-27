@@ -43,7 +43,7 @@
 
     if (babies.length > 0) {
       babies.forEach(function(baby) {
-        console.log(baby);
+        baby.timers.mercy = 4;
         that.asteroids.push(baby);
       });
     }

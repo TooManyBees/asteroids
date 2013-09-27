@@ -45,18 +45,14 @@
   Asteroid.prototype.break = function() {
     var babies = []
     if (this.radius > 10) {
-      var child1 = new Asteroid(
+      babies.push(new Asteroid(
                       [this.pos[0], this.pos[1]],
                       [this.vel[1], this.vel[0]],
-                      DefaultAsteroidSmall);
-      var child2 = new Asteroid(
+                      DefaultAsteroidSmall));
+      babies.push(new Asteroid(
                       [this.pos[0], this.pos[1]],
                       [-this.vel[1], -this.vel[0]],
-                      DefaultAsteroidSmall);
-      child1.timers.mercy = 9;
-      child2.timers.mercy = 9;
-      babies.push(child1);
-      babies.push(child2);
+                      DefaultAsteroidSmall));
     }
     return babies;
   }
