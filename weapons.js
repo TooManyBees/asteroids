@@ -20,10 +20,10 @@
   }
 
   Weapon.FIRE = {
-    cooldown: 3,
-    radius: 5,
+    cooldown: 2,
+    radius: 8,
     damage: 2,
-    speed: 40,
+    speed: 25,
     color: 'red',
     lifetime: 10
   }
