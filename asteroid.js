@@ -10,6 +10,7 @@
   var Asteroid = Asteroids.Asteroid = function(pos, vel, config) {
     this.score = config.score;
     this.child = config.child;
+    this.child_count = config.child_count;
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
   }
 
@@ -24,7 +25,24 @@
     color: "brown",
     radius: 15,
     score: 10,
-    child: DefaultAsteroidSmall
+    child: DefaultAsteroidSmall,
+    child_count: 2
+  }
+
+  var DefaultAsteroidLarge = Asteroids.DefaultAsteroidLarge = {
+    color: "brown",
+    radius: 20,
+    score: 15,
+    child: DefaultAsteroidSmall,
+    child_count: 3
+  }
+
+  var DefaultAsteroidMega = Asteroids.DefaultAsteroidMega = {
+    color: "gray",
+    radius: 25,
+    score: 20,
+    child: DefaultAsteroidLarge,
+    child_count: 2
   }
 
   Asteroid.inherits(Asteroids.MovingObject);
@@ -50,14 +68,20 @@
     var babies = []
     var that = this;
     if (that.child !== 0) {
-      babies.push(new Asteroid(
+      for (var i = 0; i < that.child_count; i++) {
+        babies.push(new Asteroid(
                       [that.pos[0], that.pos[1]],
-                      [that.vel[1], that.vel[0]],
+                      randomVelocity(Asteroids.RATE/16, Asteroids.RATE/32),
                       that.child));
-      babies.push(new Asteroid(
-                      [that.pos[0], that.pos[1]],
-                      [-that.vel[1], -that.vel[0]],
-                      that.child));
+      }
+      // babies.push(new Asteroid(
+      //                 [that.pos[0], that.pos[1]],
+      //                 randomVelocity(Asteroids.RATE/16, Asteroids.RATE/32),
+      //                 that.child));
+      // babies.push(new Asteroid(
+      //                 [that.pos[0], that.pos[1]],
+      //                 [-that.vel[1], -that.vel[0]],
+      //                 that.child));
     }
     return babies;
   }
