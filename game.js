@@ -54,7 +54,7 @@
   Game.prototype.drawScore = function() {
     this.ctx.fillStyle = "white";
     this.ctx.font = "20pt Arial";
-    this.ctx.textAlign = "right"
+    this.ctx.textAlign = "right";
     this.ctx.textBaseline = "top";
     this.ctx.beginPath();
     this.ctx.fillText("Score: " + this.score, Asteroids.DIM_X - 25,0);
@@ -93,14 +93,10 @@
       if (asteroid.isCollidedWith(that.ship)) {
         asteroid.bounce()
         that.ship.lives -= 1;
-        if (that.ship.lives === 0) {
-          alert("You died, repeatedly.");
-          that.stop();
-        } else {
-          that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
-          that.ship.vel = [0,0];
-          that.ship.timers.mercy = Asteroids.RATE * 3;
-        }
+
+        that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
+        that.ship.vel = [0,0];
+        that.ship.timers.mercy = Asteroids.RATE * 3;
       }
     });
 
@@ -126,10 +122,22 @@
     }
   }
 
-  Game.prototype.checkWinCondition = function() {
-    if (this.asteroids.length === 0) {
+  Game.prototype.printEndMessage = function(message) {
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "80pt Arial";
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+    this.ctx.beginPath();
+    this.ctx.fillText(message, Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2);
+  };
+
+  Game.prototype.checkEndCondition = function() {
+    if (this.asteroids.length <= 0) {
       this.stop();
-      alert("You win.");
+      this.printEndMessage("You win.");
+    } else if (this.ship.lives <= 0) {
+      this.stop();
+      this.printEndMessage("You lose.");
     }
   }
 
@@ -144,7 +152,7 @@
     this.listenForKeys();
     this.move();
     this.draw();
-    this.checkWinCondition();
+    this.checkEndCondition();
     this.checkCollisions();
   }
 
