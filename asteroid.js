@@ -9,19 +9,22 @@
 
   var Asteroid = Asteroids.Asteroid = function(pos, vel, config) {
     this.score = config.score;
+    this.child = config.child;
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
-  }
-
-  var DefaultAsteroid = Asteroids.DefaultAsteroid = {
-    color: "brown",
-    radius: 15,
-    score: 10
   }
 
   var DefaultAsteroidSmall = Asteroids.DefaultAsteroidSmall = {
     color: "orange",
     radius: 10,
-    score: 5
+    score: 5,
+    child: 0
+  }
+
+  var DefaultAsteroid = Asteroids.DefaultAsteroid = {
+    color: "brown",
+    radius: 15,
+    score: 10,
+    child: DefaultAsteroidSmall
   }
 
   Asteroid.inherits(Asteroids.MovingObject);
@@ -45,15 +48,16 @@
 
   Asteroid.prototype.break = function() {
     var babies = []
-    if (this.radius > 10) {
+    var that = this;
+    if (that.child !== 0) {
       babies.push(new Asteroid(
-                      [this.pos[0], this.pos[1]],
-                      [this.vel[1], this.vel[0]],
-                      DefaultAsteroidSmall));
+                      [that.pos[0], that.pos[1]],
+                      [that.vel[1], that.vel[0]],
+                      that.child));
       babies.push(new Asteroid(
-                      [this.pos[0], this.pos[1]],
-                      [-this.vel[1], -this.vel[0]],
-                      DefaultAsteroidSmall));
+                      [that.pos[0], that.pos[1]],
+                      [-that.vel[1], -that.vel[0]],
+                      that.child));
     }
     return babies;
   }
