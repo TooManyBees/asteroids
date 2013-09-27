@@ -2,6 +2,7 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Game = Asteroids.Game = function(ctx) {
+    this.paused = false;
     this.score = 0;
     this.timer = 0;
     this.ctx = ctx;
@@ -151,20 +152,36 @@
     this.checkCollisions();
   }
 
-  Game.prototype.bindKeyHandlers = function() {
-    that = this;
-    key('w', function(){ that.ship.power(1); });
-    key('a', function(){ that.ship.rotate(-1); });
-    key('d', function(){ that.ship.rotate(1); });
-    key('space', function(){ that.fireBullet(); });
-  }
-
-  Game.prototype.start = function (){
+  Game.prototype.resume = function (){
+    this.paused = false;
     this.timer = setInterval(this.step.bind(this), 33);
   }
 
   Game.prototype.stop = function () {
     clearInterval(this.timer);
+    this.paused = true;
+  }
+
+  Game.prototype.togglePause = function() {
+    if (this.paused) {
+      this.resume();
+    } else {
+      this.stop();
+    }
+  }
+
+  Game.prototype.bindKeyHandlers = function() {
+    var that = this;
+    // key('w', function(){ that.ship.power(1); });
+    // key('a', function(){ that.ship.rotate(-1); });
+    // key('d', function(){ that.ship.rotate(1); });
+    // key('space', function(){ that.fireBullet(); });
+    key('`', function(){ that.togglePause(); });
+  }
+
+  Game.prototype.start = function() {
+    this.bindKeyHandlers();
+    this.resume();
   }
 
 })(this);
