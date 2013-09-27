@@ -8,19 +8,16 @@
     this.ctx = ctx;
     this.asteroids = [];
     this.bullets = [];
-    this.ship = new Asteroids.Ship([Game.DIM_X / 2, Game.DIM_Y / 2],[0,0]);
+    this.ship = new Asteroids.Ship([Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2],[0,0]);
     this.addAsteroids(10);
   }
-
-  Game.DIM_X = 500;
-  Game.DIM_Y = 500;
 
   var img = new Image();
   img.src = 'space.jpg';
 
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i = 0; i < numAsteroids; i++) {
-      newAsteroid = Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y)
+      var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
       if (this.asteroids.some(function(asteroid) {
         return newAsteroid.isCollidedWith(asteroid);
           }) || newAsteroid.isCollidedWith(this.ship)) {
@@ -33,7 +30,7 @@
   }
 
   Game.prototype.removeAsteroid = function(asteroid) {
-    that = this;
+    var that = this;
     that.score += asteroid.score;
 
     var babies = asteroid.break();
@@ -60,12 +57,12 @@
     this.ctx.textAlign = "right"
     this.ctx.textBaseline = "top";
     this.ctx.beginPath();
-    this.ctx.fillText("Score: " + this.score, Game.DIM_X - 25,0);
+    this.ctx.fillText("Score: " + this.score, Asteroids.DIM_X - 25,0);
   }
 
   Game.prototype.draw = function(){
-    that = this;
-    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    var that = this;
+    this.ctx.clearRect(0, 0, Asteroids.DIM_X, Asteroids.DIM_Y);
     this.ctx.drawImage(img,0,0);
 
     this.asteroids.forEach (function(asteroid) {
@@ -80,18 +77,18 @@
 
   Game.prototype.move = function(){
     this.asteroids.forEach (function(asteroid) {
-      asteroid.move(Game.DIM_X, Game.DIM_Y);
+      asteroid.move(Asteroids.DIM_X, Asteroids.DIM_Y);
     });
 
     this.bullets.forEach (function(bullet) {
-      bullet.move(Game.DIM_X, Game.DIM_Y);
+      bullet.move(Asteroids.DIM_X, Asteroids.DIM_Y);
     });
 
-    this.ship.move(Game.DIM_X, Game.DIM_Y);
+    this.ship.move(Asteroids.DIM_X, Asteroids.DIM_Y);
   }
 
   Game.prototype.checkCollisions = function () {
-    that = this;
+    var that = this;
     this.asteroids.forEach(function(asteroid) {
       if (asteroid.isCollidedWith(that.ship)) {
         asteroid.bounce()
@@ -100,7 +97,7 @@
           alert("You died, repeatedly.");
           that.stop();
         } else {
-          that.ship.pos = [Game.DIM_X/2, Game.DIM_Y/2];
+          that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
           that.ship.vel = [0,0];
           that.ship.timers['mercy'] = 30;
         }
@@ -144,7 +141,6 @@
   };
 
   Game.prototype.step = function (){
-    //todo: move ticking down ship statuses to separate method
     this.listenForKeys();
     this.move();
     this.draw();
@@ -171,11 +167,9 @@
   }
 
   Game.prototype.bindKeyHandlers = function() {
+    // These are for keys that don't need to be checked every frame
+    // (so basically toggle pause and that's it)
     var that = this;
-    // key('w', function(){ that.ship.power(1); });
-    // key('a', function(){ that.ship.rotate(-1); });
-    // key('d', function(){ that.ship.rotate(1); });
-    // key('space', function(){ that.fireBullet(); });
     key('`', function(){ that.togglePause(); });
   }
 
