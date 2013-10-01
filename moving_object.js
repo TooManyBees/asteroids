@@ -2,12 +2,11 @@
 
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var MovingObject = Asteroids.MovingObject = function(pos, vel, radius, color, onScreen) {
+  var MovingObject = Asteroids.MovingObject = function(pos, vel, radius, color) {
     this.pos = pos;
     this.vel = vel;
     this.radius = radius;
     this.color = color;
-    this.onScreen = (onScreen === undefined) ? true : onScreen ;
     this.timers = {
       mercy : 0
     }
@@ -27,11 +26,7 @@
 
     this.pos[0] += this.vel[0];
     this.pos[1] += this.vel[1];
-    if (this.onScreen) {
-      this.flipIfOffscreen();
-    } else {
-      this.arriveIfOnscreen();
-    }
+    this.flipIfOffscreen();
   }
 
   MovingObject.prototype.flipIfOffscreen = function() {
@@ -49,13 +44,17 @@
     }
   }
 
-  MovingObject.prototype.arriveIfOnscreen = function() {
-    var dX = Asteroids.DIM_X, dy = Asteroids.DIM_Y;
-    if (this.pos[0] > 0 - this.radius || this.pos[0] < dX + this.radius) {
-      this.onScreen = true;
-    }
-    if (this.pos[1] > 0 - this.radius || this.pos[1] < dX + this.radius) {
-      this.onScreen = true;
+  MovingObject.prototype.placeOffScreen = function() {
+    var maxX = Asteroids.DIM_X, maxY = Asteroids.DIM_Y;
+    var self = this;
+    // Finds the general direction that an object is traveling, then places
+    // it just offscreen on the correct edge so it will float into view
+    if (Math.abs(self.vel[0]) > Math.abs(self.vel[1])) {
+      // Mostly traveling horizontally
+      self.pos[0] = (self.vel[0] > 0) ? (0 - self.radius) : (maxX + self.radius);
+    } else {
+      // Mostly traveling vertically
+      self.pos[1] = (self.vel[1] > 0) ? (0 - self.radius) : (maxY + self.radius);
     }
   }
 

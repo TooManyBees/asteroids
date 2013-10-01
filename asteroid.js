@@ -31,16 +31,26 @@
   }
 
   var randomVelocity = function(max, min) {
-    randomAngle = Math.random() * 2 * Math.PI;
-    s = (Math.random() * (max - min) + min)
+    var randomAngle = Math.random() * 2 * Math.PI;
+    var s = (Math.random() * (max - min) + min)
     return [Math.cos(randomAngle)*s, Math.sin(randomAngle)*s];
   }
 
   // TODO: Add a speedUp ratio to the calculations
+  // Adds an asteroid at a random location on the canvas
   Asteroid.randomAsteroid = function(dimX, dimY) {
-    startPos = randomPosition(dimX, dimY, 1);
-    startVel = randomVelocity(Asteroids.RATE / 16, Asteroids.RATE / 32);
-    return new Asteroid(startPos, startVel, Asteroids.DefaultAsteroid);
+    var startPos = randomPosition(dimX, dimY, 1);
+    var startVel = randomVelocity(Asteroids.RATE / 16, Asteroids.RATE / 32);
+    var newAsteroid = Asteroid(startPos, startVel, Asteroids.DefaultAsteroid);
+    newAsteroid.placeOffScreen();
+    return newAsteroid;
+  }
+
+  // Adds an asteroid at a random location just barely off the canvas
+  Asteroid.replacementAsteroid = function() {
+    var dimX = Asteroids.DIM_X, dimY = Asteroids.DIM_Y;
+    var newAsteroid = Asteroid.randomAsteroid(dimX, dimY);
+
   }
 
   Asteroid.prototype.break = function() {
