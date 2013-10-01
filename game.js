@@ -8,6 +8,8 @@
     this.ctx = ctx;
     this.asteroids = [];
     this.bullets = [];
+    this.damageFields = [];
+    this.items = [];
     this.ship = new Asteroids.Ship([Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2],[0,0]);
     this.addAsteroids(10);
   }
@@ -77,14 +79,14 @@
 
   Game.prototype.move = function(){
     this.asteroids.forEach (function(asteroid) {
-      asteroid.move(Asteroids.DIM_X, Asteroids.DIM_Y);
+      asteroid.move();
     });
 
     this.bullets.forEach (function(bullet) {
-      bullet.move(Asteroids.DIM_X, Asteroids.DIM_Y);
+      bullet.move();
     });
 
-    this.ship.move(Asteroids.DIM_X, Asteroids.DIM_Y);
+    this.ship.move();
   }
 
   Game.prototype.checkCollisions = function () {

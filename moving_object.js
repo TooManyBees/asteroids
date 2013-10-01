@@ -2,11 +2,12 @@
 
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var MovingObject = Asteroids.MovingObject = function(pos, vel, radius, color) {
+  var MovingObject = Asteroids.MovingObject = function(pos, vel, radius, color, onScreen) {
     this.pos = pos;
     this.vel = vel;
     this.radius = radius;
     this.color = color;
+    this.onScreen = (onScreen === undefined) ? true : onScreen ;
     this.timers = {
       mercy : 0
     }
@@ -21,29 +22,40 @@
     });
   }
 
-  MovingObject.prototype.move = function(dX, dY) {
+  MovingObject.prototype.move = function() {
     this.tick();
 
     this.pos[0] += this.vel[0];
-    this.flipIfOffscreenX(dX);
-
     this.pos[1] += this.vel[1];
-    this.flipIfOffscreenY(dY);
+    if (this.onScreen) {
+      this.flipIfOffscreen();
+    } else {
+      this.arriveIfOnscreen();
+    }
   }
 
-  MovingObject.prototype.flipIfOffscreenX = function(dX) {
+  MovingObject.prototype.flipIfOffscreen = function() {
+    var dX = Asteroids.DIM_X, dY = Asteroids.DIM_Y;
     if (this.pos[0] < 0 - this.radius) {
       this.pos[0] += dX + (2*this.radius);
     } else if (this.pos[0] > dX + this.radius) {
       this.pos[0] -= dX + (2*this.radius);
     }
-  }
 
-  MovingObject.prototype.flipIfOffscreenY = function(dY) {
     if (this.pos[1] < 0 - this.radius) {
       this.pos[1] += dY + (2*this.radius);
     } else if (this.pos[1] > dY + this.radius) {
       this.pos[1] -= dY + (2*this.radius);
+    }
+  }
+
+  MovingObject.prototype.arriveIfOnscreen = function() {
+    var dX = Asteroids.DIM_X, dy = Asteroids.DIM_Y;
+    if (this.pos[0] > 0 - this.radius || this.pos[0] < dX + this.radius) {
+      this.onScreen = true;
+    }
+    if (this.pos[1] > 0 - this.radius || this.pos[1] < dX + this.radius) {
+      this.onScreen = true;
     }
   }
 
