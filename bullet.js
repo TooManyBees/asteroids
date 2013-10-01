@@ -8,15 +8,13 @@
   }
 
   var Bullet = Asteroids.Bullet = function(pos, vel, config, game) {
+    this.persistant = true; // it sticks around rather than being recreated each frame
     this.game = game;
     this.lifetime = config.lifetime;
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
   }
 
   Bullet.inherits(Asteroids.MovingObject);
-
-  Bullet.RADIUS = 2;
-  Bullet.COLOR = "green";
 
   Bullet.prototype.move = function(maxX, maxY) {
     this.lifetime -= 1;
@@ -28,7 +26,7 @@
   }
 
   Bullet.prototype.hitAsteroids = function() {
-    bullet = this;
+    var bullet = this;
     this.game.asteroids.forEach(function(asteroid) {
       if (asteroid.isCollidedWith(bullet)) {
         bullet.game.removeAsteroid(asteroid);
@@ -36,6 +34,5 @@
       }
     });
   }
-
 
 })(this);

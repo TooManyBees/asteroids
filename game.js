@@ -93,7 +93,7 @@
       if (asteroid.isCollidedWith(that.ship)) {
         asteroid.bounce()
         that.ship.lives -= 1;
-
+        that.score -= 20;
         that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
         that.ship.vel = [0,0];
         that.ship.timers.mercy = Asteroids.RATE * 3;

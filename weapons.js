@@ -13,7 +13,7 @@
   Weapon.STANDARD = {
     cooldown: Math.floor(300 / Asteroids.RATE),
     radius: 3,
-    damage: 3,
+    damage: 2,
     speed: Asteroids.RATE * 500 / 1000,
     color: 'green',
     lifetime: Asteroids.RATE * 5
