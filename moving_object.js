@@ -21,23 +21,30 @@
     });
   }
 
-  MovingObject.prototype.move = function(maxX, maxY) {
+  MovingObject.prototype.move = function(dX, dY) {
     this.tick();
 
     this.pos[0] += this.vel[0];
-    if (this.pos[0] < 0) {
-      this.pos[0] += maxX;
-    } else if (this.pos[0] > maxX) {
-      this.pos[0] -= maxX;
-    }
+    this.flipIfOffscreenX(dX);
 
     this.pos[1] += this.vel[1];
-    if (this.pos[1] < 0) {
-      this.pos[1] += maxY;
-    } else if (this.pos[1] > maxY) {
-      this.pos[1] -= maxY;
-    }
+    this.flipIfOffscreenY(dY);
+  }
 
+  MovingObject.prototype.flipIfOffscreenX = function(dX) {
+    if (this.pos[0] < 0 - this.radius) {
+      this.pos[0] += dX + (2*this.radius);
+    } else if (this.pos[0] > dX + this.radius) {
+      this.pos[0] -= dX + (2*this.radius);
+    }
+  }
+
+  MovingObject.prototype.flipIfOffscreenY = function(dY) {
+    if (this.pos[1] < 0 - this.radius) {
+      this.pos[1] += dY + (2*this.radius);
+    } else if (this.pos[1] > dY + this.radius) {
+      this.pos[1] -= dY + (2*this.radius);
+    }
   }
 
   MovingObject.prototype.draw = function(ctx) {
