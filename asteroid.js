@@ -1,12 +1,6 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  Function.prototype.inherits = function(superclass){
-    function Surrogate () {};
-    Surrogate.prototype = superclass.prototype;
-    this.prototype = new Surrogate();
-  }
-
   var Asteroid = Asteroids.Asteroid = function(pos, vel, config) {
     this.score = config.score;
     this.hp = config.hp;
@@ -15,39 +9,38 @@
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
   }
 
-  var DefaultAsteroidSmall = Asteroids.DefaultAsteroidSmall = {
-    color: "orange",
-    radius: 10,
-    score: 5,
-    hp: 2,
-    child: 0
-  }
-
-  var DefaultAsteroid = Asteroids.DefaultAsteroid = {
-    color: "brown",
-    radius: 15,
-    score: 10,
-    hp: 5,
-    child: DefaultAsteroidSmall,
-    child_count: 2
-  }
-
-  var DefaultAsteroidLarge = Asteroids.DefaultAsteroidLarge = {
-    color: "brown",
-    radius: 20,
-    score: 15,
-    hp: 10,
-    child: DefaultAsteroidSmall,
-    child_count: 3
-  }
-
-  var DefaultAsteroidMega = Asteroids.DefaultAsteroidMega = {
-    color: "gray",
-    radius: 25,
-    score: 20,
-    hp: 20,
-    child: DefaultAsteroidLarge,
-    child_count: 2
+  Asteroid.defaults = {
+    small: {
+      color: "orange",
+      radius: 10,
+      score: 5,
+      hp: 2,
+      child: 0
+    },
+    medium: {
+      color: "brown",
+      radius: 15,
+      score: 10,
+      hp: 5,
+      child: 'small',
+      child_count: 2
+    },
+    large: {
+      color: "brown",
+      radius: 20,
+      score: 15,
+      hp: 10,
+      child: 'small',
+      child_count: 3
+    },
+    mega: {
+      color: "gray",
+      radius: 25,
+      score: 20,
+      hp: 20,
+      child: 'medium',
+      child_count: 2
+    }
   }
 
   Asteroid.inherits(Asteroids.MovingObject);
@@ -67,7 +60,7 @@
   Asteroid.randomAsteroid = function(dimX, dimY) {
     var startPos = randomPosition(dimX, dimY, 1);
     var startVel = randomVelocity(Asteroids.RATE / 16, Asteroids.RATE / 32);
-    var newAsteroid = new Asteroid(startPos, startVel, Asteroids.DefaultAsteroid);
+    var newAsteroid = new Asteroid(startPos, startVel, Asteroid.defaults.medium);
     newAsteroid.placeOffScreen();
     return newAsteroid;
   }
@@ -87,7 +80,7 @@
         babies.push(new Asteroid(
                       [that.pos[0], that.pos[1]],
                       randomVelocity(Asteroids.RATE/16, Asteroids.RATE/32),
-                      that.child));
+                      Asteroid.defaults[that.child]));
       }
       // babies.push(new Asteroid(
       //                 [that.pos[0], that.pos[1]],
