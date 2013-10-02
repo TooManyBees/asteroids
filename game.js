@@ -20,15 +20,16 @@
 
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i = 0; i < numAsteroids; i++) {
-      var newAsteroid = Asteroids.Asteroid.randomAsteroid(this, Asteroids.DIM_X, Asteroids.DIM_Y)
-      if (this.asteroids.some(function(asteroid) {
-        return newAsteroid.isCollidedWith(asteroid);
-          }) || newAsteroid.isCollidedWith(this.ship)) {
-        console.log("retrying");
-        i--;
-      } else {
+      var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
+      // if (this.asteroids.some(function(asteroid) {
+      //   return newAsteroid.isCollidedWith(asteroid);
+      //     }) || newAsteroid.isCollidedWith(this.ship)) {
+      //   console.log("retrying");
+      //   i--;
+      // } else {
+        newAsteroid.game = this;
         this.asteroids.push(newAsteroid);
-      }
+      // }
     }
   }
 
@@ -43,6 +44,7 @@
 
     if (babies.length > 0) {
       babies.forEach(function(baby) {
+        baby.game = that;
         baby.timers.mercy = Math.ceil(Asteroids.RATE / 2);
         that.asteroids.push(baby);
       });

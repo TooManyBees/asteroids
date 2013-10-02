@@ -1,8 +1,7 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Asteroid = Asteroids.Asteroid = function(game, pos, vel, config) {
-    this.game = game;
+  var Asteroid = Asteroids.Asteroid = function(pos, vel, config) {
     this.score = config.score;
     this.hp = config.hp;
     this.child = config.child;
@@ -58,10 +57,10 @@
 
   // TODO: Add a speedUp ratio to the calculations
   // Adds an asteroid at a random location on the canvas
-  Asteroid.randomAsteroid = function(game, dimX, dimY) {
+  Asteroid.randomAsteroid = function(dimX, dimY) {
     var startPos = randomPosition(dimX, dimY, 1);
     var startVel = randomVelocity(Asteroids.RATE / 16, Asteroids.RATE / 32);
-    var newAsteroid = new Asteroid(game, startPos, startVel, Asteroid.defaults.medium);
+    var newAsteroid = new Asteroid(startPos, startVel, Asteroid.defaults.medium);
     newAsteroid.placeOffScreen();
     return newAsteroid;
   }
@@ -78,7 +77,7 @@
     var that = this;
     if (that.child !== 0) {
       for (var i = 0; i < that.child_count; i++) {
-        babies.push(new Asteroid(that.game,
+        babies.push(new Asteroid(
                       [that.pos[0], that.pos[1]],
                       randomVelocity(Asteroids.RATE/16, Asteroids.RATE/32),
                       Asteroid.defaults[that.child]));
@@ -97,7 +96,7 @@
 
   Asteroid.prototype.takeDamage = function(damage) {
     this.hp -= damage;
-    if (this.hp <= 0) {
+    if (this.game && this.hp <= 0) {
       this.game.removeAsteroid(this);
     }
   };
