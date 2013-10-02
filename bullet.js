@@ -1,12 +1,6 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  Function.prototype.inherits = function(superclass){
-    function Surrogate () {};
-    Surrogate.prototype = superclass.prototype;
-    this.prototype = new Surrogate();
-  }
-
   var Bullet = Asteroids.Bullet = function(pos, vel, config, game) {
     // this.persistant = true; // it sticks around rather than being recreated each frame
     this.game = game;
