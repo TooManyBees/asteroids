@@ -21,23 +21,41 @@
     });
   }
 
-  MovingObject.prototype.move = function(maxX, maxY) {
+  MovingObject.prototype.move = function() {
     this.tick();
 
     this.pos[0] += this.vel[0];
-    if (this.pos[0] < 0) {
-      this.pos[0] += maxX;
-    } else if (this.pos[0] > maxX) {
-      this.pos[0] -= maxX;
-    }
-
     this.pos[1] += this.vel[1];
-    if (this.pos[1] < 0) {
-      this.pos[1] += maxY;
-    } else if (this.pos[1] > maxY) {
-      this.pos[1] -= maxY;
+    this.flipIfOffscreen();
+  }
+
+  MovingObject.prototype.flipIfOffscreen = function() {
+    var dX = Asteroids.DIM_X, dY = Asteroids.DIM_Y;
+    if (this.pos[0] < 0 - this.radius) {
+      this.pos[0] += dX + (2*this.radius);
+    } else if (this.pos[0] > dX + this.radius) {
+      this.pos[0] -= dX + (2*this.radius);
     }
 
+    if (this.pos[1] < 0 - this.radius) {
+      this.pos[1] += dY + (2*this.radius);
+    } else if (this.pos[1] > dY + this.radius) {
+      this.pos[1] -= dY + (2*this.radius);
+    }
+  }
+
+  MovingObject.prototype.placeOffScreen = function() {
+    var maxX = Asteroids.DIM_X, maxY = Asteroids.DIM_Y;
+    var self = this;
+    // Finds the general direction that an object is traveling, then places
+    // it just offscreen on the correct edge so it will float into view
+    if (Math.abs(self.vel[0]) > Math.abs(self.vel[1])) {
+      // Mostly traveling horizontally
+      self.pos[0] = (self.vel[0] > 0) ? (0 - self.radius) : (maxX + self.radius);
+    } else {
+      // Mostly traveling vertically
+      self.pos[1] = (self.vel[1] > 0) ? (0 - self.radius) : (maxY + self.radius);
+    }
   }
 
   MovingObject.prototype.draw = function(ctx) {

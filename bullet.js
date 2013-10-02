@@ -8,7 +8,7 @@
   }
 
   var Bullet = Asteroids.Bullet = function(pos, vel, config, game) {
-    this.persistant = true; // it sticks around rather than being recreated each frame
+    // this.persistant = true; // it sticks around rather than being recreated each frame
     this.game = game;
     this.lifetime = config.lifetime;
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);

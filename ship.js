@@ -10,7 +10,7 @@
   var Ship = Asteroids.Ship = function(pos, vel) {
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
 
-    this.weapon = new Asteroids.Weapon(Asteroids.Weapon.STANDARD);
+    this.weapon = new Asteroids.Weapon(Asteroids.Weapon.FIRE);
     this.timers.shot = 0;
     this.lives = 3;
     this.heading = Math.PI / 2;
@@ -36,11 +36,7 @@
     ship.timers.shot = ship.weapon.cooldown;
     var bPos = [ship.pos[0], ship.pos[1]];
     var bVelocity = this.weapon.getVelocity(ship.heading, ship.vel)
-    return new Asteroids.Bullet(bPos, bVelocity, {
-                                radius: ship.weapon.radius,
-                                color: ship.weapon.color,
-                                lifetime: ship.weapon.lifetime
-                                }, game);
+    return new Asteroids.Bullet(bPos, bVelocity, ship.weapon.bullet, game);
   }
 
   Ship.prototype.draw = function(ctx) {
