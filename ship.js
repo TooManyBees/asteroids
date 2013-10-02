@@ -1,12 +1,6 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  Function.prototype.inherits = function(superclass){
-    function Surrogate () {};
-    Surrogate.prototype = superclass.prototype;
-    this.prototype = new Surrogate();
-  }
-
   var Ship = Asteroids.Ship = function(pos, vel) {
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
 
@@ -23,7 +17,7 @@
 
   Ship.prototype.power = function(impulse) {
     var ship = this;
-    this.vel[0] += Math.cos(ship.heading) * impulse / (2*Asteroids.RATE); // CHECK THIS
+    this.vel[0] += Math.cos(ship.heading) * impulse / (2*Asteroids.RATE);
     this.vel[1] += Math.sin(ship.heading) * impulse / (2*Asteroids.RATE);
   }
 
