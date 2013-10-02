@@ -20,7 +20,7 @@
 
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i = 0; i < numAsteroids; i++) {
-      var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
+      var newAsteroid = Asteroids.Asteroid.randomAsteroid(this, Asteroids.DIM_X, Asteroids.DIM_Y)
       if (this.asteroids.some(function(asteroid) {
         return newAsteroid.isCollidedWith(asteroid);
           }) || newAsteroid.isCollidedWith(this.ship)) {
@@ -34,6 +34,7 @@
 
   Game.prototype.removeAsteroid = function(asteroid) {
     var that = this;
+    console.log("removing asteroid", asteroid)
     that.score += asteroid.score;
 
     var babies = asteroid.break();

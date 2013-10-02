@@ -10,7 +10,7 @@
   var Ship = Asteroids.Ship = function(pos, vel) {
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
 
-    this.weapon = new Asteroids.Weapon(Asteroids.Weapon.FIRE);
+    this.weapon = new Asteroids.Weapon(Asteroids.Weapon.STANDARD);
     this.timers.shot = 0;
     this.lives = 3;
     this.heading = Math.PI / 2;

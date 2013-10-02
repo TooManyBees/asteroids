@@ -5,6 +5,7 @@
     // this.persistant = true; // it sticks around rather than being recreated each frame
     this.game = game;
     this.lifetime = config.lifetime;
+    this.damage = config.damage;
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
   }
 
@@ -23,7 +24,8 @@
     var bullet = this;
     this.game.asteroids.forEach(function(asteroid) {
       if (asteroid.isCollidedWith(bullet)) {
-        bullet.game.removeAsteroid(asteroid);
+        // bullet.game.removeAsteroid(asteroid);
+        asteroid.takeDamage(bullet.damage);
         bullet.game.removeBullet(bullet);
       }
     });
