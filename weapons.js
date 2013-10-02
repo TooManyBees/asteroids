@@ -34,9 +34,14 @@
     speed: Asteroids.RATE * 100 / 1000,
     bullet: {
       radius: 10,
-      damage: 12,
+      damage: 0,
       color: 'cyan',
-      lifetime: Asteroids.RATE * 8
+      lifetime: Asteroids.RATE * 8,
+      fuse: function() {
+        // Remember to bind function to the bullet when called
+        console.log("Kaboom!");
+        var explosion = new Asteroids.Effect(this.pos, Asteroids.Effect.BOMB);
+      }
     }
   }
 

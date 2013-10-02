@@ -9,6 +9,7 @@
 
   var Asteroid = Asteroids.Asteroid = function(pos, vel, config) {
     this.score = config.score;
+    this.hp = config.hp;
     this.child = config.child;
     this.child_count = config.child_count;
     Asteroids.MovingObject.call(this, pos, vel, config.radius, config.color);
@@ -18,6 +19,7 @@
     color: "orange",
     radius: 10,
     score: 5,
+    hp: 2,
     child: 0
   }
 
@@ -25,6 +27,7 @@
     color: "brown",
     radius: 15,
     score: 10,
+    hp: 5,
     child: DefaultAsteroidSmall,
     child_count: 2
   }
@@ -33,6 +36,7 @@
     color: "brown",
     radius: 20,
     score: 15,
+    hp: 10,
     child: DefaultAsteroidSmall,
     child_count: 3
   }
@@ -41,6 +45,7 @@
     color: "gray",
     radius: 25,
     score: 20,
+    hp: 20,
     child: DefaultAsteroidLarge,
     child_count: 2
   }
