@@ -35,7 +35,6 @@
 
   Game.prototype.removeAsteroid = function(asteroid) {
     var that = this;
-    console.log("removing asteroid", asteroid)
     that.score += asteroid.score;
 
     var babies = asteroid.break();

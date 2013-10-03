@@ -45,21 +45,15 @@
 
   Asteroid.inherits(Asteroids.MovingObject);
 
-  var randomPosition = function(dimX, dimY, ratio) {
-    return [Math.random() * dimX * ratio, Math.random() * dimY * ratio];
-  }
-
-  var randomVelocity = function(max, min) {
-    var randomAngle = Math.random() * 2 * Math.PI;
-    var s = (Math.random() * (max - min) + min)
-    return [Math.cos(randomAngle)*s, Math.sin(randomAngle)*s];
-  }
-
   // TODO: Add a speedUp ratio to the calculations
   // Adds an asteroid at a random location on the canvas
   Asteroid.randomAsteroid = function(dimX, dimY) {
-    var startPos = randomPosition(dimX, dimY, 1);
-    var startVel = randomVelocity(Asteroids.RATE / 16, Asteroids.RATE / 32);
+    var startPos = Asteroids.randomPosition(dimX, dimY, 1);
+    var startVel = Asteroids.randomVelocity(
+      Asteroids.randomVector(),
+      Asteroids.RATE / 16,
+      Asteroids.RATE / 32
+      );
     var newAsteroid = new Asteroid(startPos, startVel, Asteroid.defaults.medium);
     newAsteroid.placeOffScreen();
     return newAsteroid;
@@ -79,7 +73,10 @@
       for (var i = 0; i < that.child_count; i++) {
         babies.push(new Asteroid(
                       [that.pos[0], that.pos[1]],
-                      randomVelocity(Asteroids.RATE/16, Asteroids.RATE/32),
+                      Asteroids.randomVelocity(
+                        Asteroids.randomVector( that.heading, Math.PI/8 ),
+                        Asteroids.RATE/16,
+                        Asteroids.RATE/32),
                       Asteroid.defaults[that.child]));
       }
       // babies.push(new Asteroid(

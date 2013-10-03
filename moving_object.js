@@ -5,6 +5,7 @@
   var MovingObject = Asteroids.MovingObject = function(pos, vel, radius, color) {
     this.pos = pos;
     this.vel = vel;
+    this.heading = Asteroids.getHeading(vel);
     this.radius = radius;
     this.color = color;
     this.timers = {
