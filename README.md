@@ -1,6 +1,6 @@
 # Asteroids
 
-A simple JavaScript and HTML Canvas game.
+A simple JavaScript and HTML Canvas game. ([Live demo on GitHub Pages](http://toomanybees.github.io/asteroids/))
 
 'W' is thrust, 'A' and 'D' are rotate, 'space' is shoot, and ` pauses the game..
 
