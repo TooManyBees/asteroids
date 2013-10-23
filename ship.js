@@ -4,6 +4,7 @@
   var Ship = Asteroids.Ship = function(pos, vel) {
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
 
+    // see weapons.js for more varieties
     this.weapon = new Asteroids.Weapon(Asteroids.Weapon.STANDARD);
     this.timers.shot = 0;
     this.lives = 3;
@@ -22,7 +23,8 @@
   }
 
   Ship.prototype.rotate = function(angle) {
-    this.heading += angle * (Math.PI * Asteroids.RATE / 1000); // 2 seconds per revolution
+    // Asteroids.RATE is in milliseconds; 2 seconds per revolution
+    this.heading += angle * (Math.PI * Asteroids.RATE / 1000);
   }
 
   Ship.prototype.fireBullet = function(game) {
@@ -34,22 +36,25 @@
   }
 
   Ship.prototype.draw = function(ctx) {
+    // mercy invincibility makes you flash, don't ya know
     if (this.timers.mercy % 4 != 0) {
       return;
     }
+
     var ship = this;
 
     ctx.save()
     ctx.fillStyle = this.color;
 
+    // Draw triangular ship
     ctx.translate(ship.pos[0], ship.pos[1]);
     ctx.rotate(ship.heading);
     ctx.translate(-ship.pos[0], -ship.pos[1]);
 
     ctx.beginPath();
     ctx.moveTo(ship.pos[0] + 10, ship.pos[1]);
-    ctx.lineTo(ship.pos[0]-10, ship.pos[1]+7);
-    ctx.lineTo(ship.pos[0]-10, ship.pos[1]-7);
+    ctx.lineTo(ship.pos[0] - 10, ship.pos[1] + 7);
+    ctx.lineTo(ship.pos[0] - 10, ship.pos[1] - 7);
     ctx.closePath();
 
     ctx.fill();

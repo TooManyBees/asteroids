@@ -21,15 +21,8 @@
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i = 0; i < numAsteroids; i++) {
       var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
-      // if (this.asteroids.some(function(asteroid) {
-      //   return newAsteroid.isCollidedWith(asteroid);
-      //     }) || newAsteroid.isCollidedWith(this.ship)) {
-      //   console.log("retrying");
-      //   i--;
-      // } else {
-        newAsteroid.game = this;
-        this.asteroids.push(newAsteroid);
-      // }
+      newAsteroid.game = this;
+      this.asteroids.push(newAsteroid);
     }
   }
 
@@ -105,17 +98,6 @@
       }
     });
 
-    // for (asteroid1 in this.asteroids) {
-    //   for (asteroid2 in this.asteroids) {
-    //     if (asteroid1 !== asteroid2) {
-    //       if (this.asteroids[asteroid1].isCollidedWith(this.asteroids[asteroid2])) {
-    //         this.asteroids[asteroid1].bounce()
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }
-
     this.bullets.forEach(function(bullet) {
       bullet.hitAsteroids();
     });
@@ -181,7 +163,7 @@
 
   Game.prototype.bindKeyHandlers = function() {
     // These are for keys that don't need to be checked every frame
-    // (so basically toggle pause and that's it)
+    // (so basically the pause button and that's it)
     var that = this;
     key('`', function(){ that.togglePause(); });
   }

@@ -17,6 +17,9 @@
     return [Math.random() * dimX * ratio, Math.random() * dimY * ratio];
   }
 
+  // Returns a random unit vector. If no arguments are given, it has a random
+  // direction. If a base and delta (angles in radians) are given, it a vector
+  // with a random direction of base +/- delta.
   Asteroids.randomVector = function(base, delta) {
     var randomAngle;
     if (base !== undefined) {
@@ -27,10 +30,17 @@
     return [Math.cos(randomAngle), Math.sin(randomAngle)];
   }
 
+  // This is not currently used, and doesn't yet incorporate the delta "jitter"
   Asteroids.aimedVector = function(startPos, endPos, delta) {
-    var heading = (endPos[0] - startPos[0]) / (endPos[1] - startPos[1]);
+    var horizontal = (endPos[0] - startPos[0]);
+    var vertical = (endPos[1] - startPos[1]);
+    var magnitude = Math.pow(Math.pow(horizontal, 2) + Math.pow(vertical, 2), 0.5);
+
+    return [horizontal/magnitude, vertical/magnitude]
   }
 
+  // Accepts a unit vector (i.e. from randomVector() above) and returns
+  // the same vector multiplied by a random magnitude between min and max
   Asteroids.randomVelocity = function(vector, min, max) {
     var s = Math.random() * (max - min) + min;
     return [vector[0]*s, vector[1]*s];

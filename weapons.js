@@ -40,11 +40,15 @@
       fuse: function(game) {
         // Remember to bind function to the bullet when called
         console.log("Kaboom!");
+        // TODO: Write effects to suit something along the lines of this code:
         // var explosion = new Asteroids.Effect(this.pos, Asteroids.Effect.BOMB);
+        // game.effects.push(explosion);
       }
     }
   }
 
+  // Given the heading of the ship, and its velocity, returns the velocity of a new
+  // bullet fired from the ship.
   Weapon.prototype.getVelocity = function(heading, shipVel) {
     var velocity = [Math.cos(heading) * this.speed, Math.sin(heading) * this.speed];
     velocity[0] += shipVel[0];
