@@ -13,18 +13,42 @@
   <style>
     body {
       background: black;
+      font-family: sans-serif;
+      color: white;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin-top: 5px;
+    }
+
+    code {
+      background: #2f3029;
+      border: 1px solid white;
+      border-radius: 3px;
+      padding: 1px 2px;
     }
   </style>
 </head>
 
 <body>
+  <canvas id="canvas"></canvas>
+  <ul>
+    <li><code>W</code> forward</li>
+    <li><code>A</code> <code>D</code> rotate</li>
+    <li><code>SPACE</code> shoot</li>
+    <li><code>`</code> pause</li>
+  </ul>
   <script>
-  var canvas = document.createElement("canvas");
+  var canvas = document.getElementById("canvas");
   canvas.setAttribute("width", Asteroids.DIM_X);
   canvas.setAttribute("height", Asteroids.DIM_Y);
 
   var body = document.getElementsByTagName("body")[0];
-  body.appendChild(canvas);
+  // body.appendChild(canvas);
 
   game = new Asteroids.Game(canvas.getContext('2d'));
   game.start();
