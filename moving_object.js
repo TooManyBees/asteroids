@@ -84,7 +84,7 @@
     dY = this.pos[1] - otherObject.pos[1];
     distance = Math.pow(Math.pow(dX,2) + Math.pow(dY, 2), 0.5);
 
-    if (this.timers.mercy > 0 || otherObject.timers.mercy > 0)
+    if (this.timers.mercy > 0)
       return false;
 
     if (distance <= (this.radius + otherObject.radius)) {

@@ -17,6 +17,13 @@
 
   Ship.inherits(Asteroids.MovingObject);
 
+  Ship.prototype.die = function() {
+    this.timers.mercy = Asteroids.RATE * 5;
+    this.lives -= 1;
+    this.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
+    this.vel = [0,0];
+  }
+
   Ship.prototype.power = function(impulse) {
     var ship = this;
     this.vel[0] += Math.cos(ship.heading) * impulse / (2*Asteroids.RATE);

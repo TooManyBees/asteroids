@@ -69,6 +69,7 @@
 
   Game.prototype.addRandomPickup = function(pos) {
     this.pickups.push(
+      // while there's just 1 working weapon, hardcoded it in
       new Asteroids.Weapon(
         Asteroids.Weapon.FIRE,
         (pos || Asteroids.randomPosition())
@@ -147,13 +148,10 @@
   Game.prototype.checkCollisions = function () {
     var that = this;
     this.asteroids.forEach(function(asteroid) {
-      if (asteroid.isCollidedWith(that.ship)) {
-        asteroid.bounce()
-        that.ship.lives -= 1;
+      if (that.ship.isCollidedWith(asteroid)) {
+        // asteroid.bounce()
+        that.ship.die();
         that.score -= 20;
-        that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
-        that.ship.vel = [0,0];
-        that.ship.timers.mercy = Asteroids.RATE * 3;
       }
     });
 
