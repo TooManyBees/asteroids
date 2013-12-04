@@ -9,6 +9,10 @@
       repop: new Asteroids.Timer(
         Asteroids.REPOPTIME,
         this.populateAsteroids.bind(this, {type: 'random'})
+      ),
+      aim: new Asteroids.Timer(
+        Asteroids.REPOPTIME,
+        this.aimAsteroid.bind(this)
       )
     };
     this.ctx = ctx;
@@ -43,6 +47,12 @@
       newAsteroid.game = this;
       this.asteroids.push(newAsteroid);
     }
+  }
+
+  Game.prototype.aimAsteroid = function() {
+    aimedAsteroid = Asteroids.Asteroid.replacementAsteroid('fast');
+    aimedAsteroid.aim(this.ship);
+    this.asteroids.push(aimedAsteroid);
   }
 
   // In practice identical to above, just less work.

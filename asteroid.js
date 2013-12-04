@@ -88,6 +88,17 @@
     return newAsteroid;
   }
 
+  Asteroid.prototype.aim = function(target) {
+    var self = this;
+
+    var newVel = Asteroids.randomVelocity(
+      Asteroids.aimedVector(self.pos, target.pos),
+      Asteroids.RATE / 8,
+      Asteroids.RATE / 16
+      );
+    this.vel = newVel;
+  }
+
   Asteroid.prototype.break = function() {
     var babies = []
     var that = this;
@@ -101,14 +112,6 @@
                         Asteroids.RATE/32),
                       Asteroid.defaults[that.child]));
       }
-      // babies.push(new Asteroid(
-      //                 [that.pos[0], that.pos[1]],
-      //                 randomVelocity(Asteroids.RATE/16, Asteroids.RATE/32),
-      //                 that.child));
-      // babies.push(new Asteroid(
-      //                 [that.pos[0], that.pos[1]],
-      //                 [-that.vel[1], -that.vel[0]],
-      //                 that.child));
     }
     return babies;
   }
