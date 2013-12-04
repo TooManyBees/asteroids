@@ -93,8 +93,8 @@
 
     var newVel = Asteroids.randomVelocity(
       Asteroids.aimedVector(self.pos, target.pos),
-      Asteroids.RATE / 8,
-      Asteroids.RATE / 16
+      Asteroids.RATE / 4,
+      Asteroids.RATE / 8
       );
     this.vel = newVel;
   }

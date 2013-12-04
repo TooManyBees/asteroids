@@ -11,7 +11,7 @@
         this.populateAsteroids.bind(this, {type: 'random'})
       ),
       aim: new Asteroids.Timer(
-        Asteroids.REPOPTIME,
+        Asteroids.REPOPTIME * 2,
         this.aimAsteroid.bind(this)
       )
     };
@@ -21,9 +21,9 @@
     this.damageFields = [];
     this.items = [];
     this.ship = new Asteroids.Ship([Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2],[0,0]);
-    // this.addAsteroids(10);
     // asteroid limit is in 'points'. A regular one is worth 15.
-    this.asteroidLimit = 150;
+    this.fieldValue = 0
+    this.fieldLimit = 150;
     this.populateAsteroids({type: 'random'});
   }
 
@@ -42,9 +42,10 @@
   Game.prototype.populateAsteroids = function(o) {
     (o || (o = {})) // Default to an empty object
 
-    while (this.asteroidValue() < (o.limit || this.asteroidLimit)) {
+    while (this.fieldValue < (o.limit || this.fieldLimit)) {
       var newAsteroid = Asteroids.Asteroid.replacementAsteroid(o.type)
       newAsteroid.game = this;
+      this.fieldValue += newAsteroid.score;
       this.asteroids.push(newAsteroid);
     }
   }
@@ -68,6 +69,7 @@
   Game.prototype.removeAsteroid = function(asteroid) {
     var that = this;
     that.score += asteroid.score;
+    that.fieldValue -= asteroid.score;
 
     var babies = asteroid.break();
     var index = this.asteroids.indexOf(asteroid);
