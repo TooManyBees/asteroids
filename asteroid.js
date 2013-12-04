@@ -68,7 +68,7 @@
 
     var asteroidType = Asteroid.defaults[type]
 
-    var startPos = Asteroids.randomPosition(dimX, dimY, 1);
+    var startPos = Asteroids.randomPosition(dimX, dimY);
     var startVel = Asteroids.randomVelocity(
       Asteroids.randomVector(),
       Asteroids.RATE / 16,

@@ -16,8 +16,10 @@
 
   Asteroids.WEAPONTIMER = 25 * Asteroids.RATE;
 
-  Asteroids.randomPosition = function(dimX, dimY, ratio) {
-    return [Math.random() * dimX * ratio, Math.random() * dimY * ratio];
+  Asteroids.randomPosition = function(dimX, dimY) {
+    (dimX || (dimX = Asteroids.DIM_X));
+    (dimY || (dimY = Asteroids.DIM_Y));
+    return [Math.random() * dimX, Math.random() * dimY];
   }
 
   // Returns a random unit vector. If no arguments are given, it has a random
