@@ -12,3 +12,4 @@ Uses the [Keymaster library](https://github.com/madrobby/keymaster) for key inpu
 
 * The game includes multiple weapons, but no option for selecting any. In the future, add pickup-items to the field that will upgrade the ship.
 * Infinite game length with an ever-increasing upper limit of asteroids on the field.
+* Employ requestAnimationFrame
