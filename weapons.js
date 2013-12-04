@@ -1,10 +1,14 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Weapon = Asteroids.Weapon = function(config) {
+  var Weapon = Asteroids.Weapon = function(config, pos, game) {
     this.cooldown = config.cooldown;
     this.speed = config.speed;
-    this.bullet = config.bullet
+    this.bullet = config.bullet;
+
+    this.game = game;
+    this.pos = pos;
+    this.radius = 20;
   }
 
   Weapon.STANDARD = {
@@ -47,6 +51,19 @@
     }
   }
 
+  Weapon.prototype.draw = function(ctx) {
+    var weapon = this;
+
+    ctx.fillStyle = weapon.bullet.color;
+    ctx.beginPath();
+    ctx.moveTo(weapon.pos[0], weapon.pos[1]-10);
+    ctx.lineTo(weapon.pos[0]+10, weapon.pos[1]);
+    ctx.lineTo(weapon.pos[0], weapon.pos[1]+10);
+    ctx.lineTo(weapon.pos[0]-10, weapon.pos[1]);
+    ctx.closePath();
+    ctx.fill();
+  }
+
   // Given the heading of the ship, and its velocity, returns the velocity of a new
   // bullet fired from the ship.
   Weapon.prototype.getVelocity = function(heading, shipVel) {
@@ -56,5 +73,10 @@
     return velocity;
   }
 
+  Weapon.prototype.pickedUpBy = function(ship) {
+    ship.weapon = this;
+    ship.timers.weapon = Asteroids.WEAPONTIMER;
+    this.game.removePickup(this);
+  }
 
 })(this);

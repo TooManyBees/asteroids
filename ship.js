@@ -7,6 +7,7 @@
     // see weapons.js for more varieties
     this.weapon = new Asteroids.Weapon(Asteroids.Weapon.STANDARD);
     this.timers.shot = 0;
+    this.timers.weapon = -1;
     this.lives = 3;
     this.heading = Math.PI / 2;
   }
@@ -33,6 +34,16 @@
     var bPos = [ship.pos[0], ship.pos[1]];
     var bVelocity = this.weapon.getVelocity(ship.heading, ship.vel)
     return new Asteroids.Bullet(bPos, bVelocity, ship.weapon.bullet, game);
+  }
+
+  // Handles ship specific timer countdowns
+  Ship.prototype.tick = function() {
+    Asteroids.MovingObject.prototype.tick.call(this);
+    // Reset weapon to STANDARD after a special weapon timer runs out
+    if (this.timers.weapon === 0) {
+      this.timers.weapon = -1;
+      this.weapon = new Asteroids.Weapon(Asteroids.Weapon.STANDARD);
+    }
   }
 
   Ship.prototype.draw = function(ctx) {

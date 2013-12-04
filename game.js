@@ -18,6 +18,7 @@
     this.ctx = ctx;
     this.asteroids = [];
     this.bullets = [];
+    this.pickups = [];
     this.damageFields = [];
     this.items = [];
     this.ship = new Asteroids.Ship([Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2],[0,0]);
@@ -90,6 +91,11 @@
     this.bullets.splice(index, 1);
   }
 
+  Game.prototype.removePickup = function(pickup) {
+    var index = this.pickups.indexOf(pickup);
+    this.pickups.splice(index, 1);
+  }
+
   Game.prototype.drawScore = function() {
     this.ctx.fillStyle = "white";
     this.ctx.font = "20pt Arial";
@@ -109,6 +115,9 @@
     });
     this.bullets.forEach (function(bullet) {
       bullet.draw(that.ctx);
+    });
+    this.pickups.forEach (function(pickup) {
+      pickup.draw(that.ctx);
     });
     this.ship.draw(that.ctx);
     this.drawScore();
@@ -136,6 +145,12 @@
         that.ship.pos = [Asteroids.DIM_X/2, Asteroids.DIM_Y/2];
         that.ship.vel = [0,0];
         that.ship.timers.mercy = Asteroids.RATE * 3;
+      }
+    });
+
+    this.pickups.forEach(function(pickup) {
+      if (that.ship.isCollidedWith(pickup)) {
+        pickup.pickedUpBy(that.ship);
       }
     });
 

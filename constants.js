@@ -14,6 +14,8 @@
   Asteroids.RATE = 17;
   Asteroids.REPOPTIME = 15 * Asteroids.RATE;
 
+  Asteroids.WEAPONTIMER = 25 * Asteroids.RATE;
+
   Asteroids.randomPosition = function(dimX, dimY, ratio) {
     return [Math.random() * dimX * ratio, Math.random() * dimY * ratio];
   }
