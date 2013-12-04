@@ -151,6 +151,7 @@
     this.pickups.forEach(function(pickup) {
       if (that.ship.isCollidedWith(pickup)) {
         pickup.pickedUpBy(that.ship);
+        that.removePickup(pickup);
       }
     });
 

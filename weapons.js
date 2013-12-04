@@ -1,12 +1,11 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Weapon = Asteroids.Weapon = function(config, pos, game) {
+  var Weapon = Asteroids.Weapon = function(config, pos) {
     this.cooldown = config.cooldown;
     this.speed = config.speed;
     this.bullet = config.bullet;
 
-    this.game = game;
     this.pos = pos;
     this.radius = 20;
   }
@@ -76,7 +75,6 @@
   Weapon.prototype.pickedUpBy = function(ship) {
     ship.weapon = this;
     ship.timers.weapon = Asteroids.WEAPONTIMER;
-    this.game.removePickup(this);
   }
 
 })(this);
