@@ -5,6 +5,12 @@
     this.paused = false;
     this.score = 0;
     this.timer = 0;
+    this.timers = {
+      repop: new Asteroids.Timer(
+        Asteroids.REPOPTIME,
+        this.populateAsteroids.bind(this, {type: 'random'})
+      )
+    };
     this.ctx = ctx;
     this.asteroids = [];
     this.bullets = [];
@@ -159,8 +165,13 @@
   };
 
   Game.prototype.step = function (){
+    var self = this;
     this.listenForKeys();
     this.move();
+    Object.keys(this.timers).forEach(function(timer) {
+      self.timers[timer].tick();
+    });
+
     this.draw();
     this.checkEndCondition();
     this.checkCollisions();
