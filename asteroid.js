@@ -120,6 +120,10 @@
     this.hp -= damage;
     if (this.game && this.hp <= 0) {
       this.game.removeAsteroid(this);
+      // An asteroid bigger than 'medium' has a 20% chance to drop a weapon
+      if (this.score > 10 && Math.random() < 0.2) {
+        this.game.addRandomPickup(this.pos);
+      }
     }
   };
 

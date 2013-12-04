@@ -67,6 +67,15 @@
   //   }
   // }
 
+  Game.prototype.addRandomPickup = function(pos) {
+    this.pickups.push(
+      new Asteroids.Weapon(
+        Asteroids.Weapon.FIRE,
+        (pos || Asteroids.randomPosition())
+        )
+      )
+  }
+
   Game.prototype.removeAsteroid = function(asteroid) {
     var that = this;
     that.score += asteroid.score;
@@ -148,6 +157,8 @@
       }
     });
 
+    // FYI Pickups probably won't have their own isCollidedWith method
+    // but they do have a pos field
     this.pickups.forEach(function(pickup) {
       if (that.ship.isCollidedWith(pickup)) {
         pickup.pickedUpBy(that.ship);
