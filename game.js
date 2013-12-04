@@ -11,20 +11,43 @@
     this.damageFields = [];
     this.items = [];
     this.ship = new Asteroids.Ship([Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2],[0,0]);
-    this.addAsteroids(10);
-    this.asteroidLimit = 10;
+    // this.addAsteroids(10);
+    // asteroid limit is in 'points'. A regular one is worth 15.
+    this.asteroidLimit = 150;
+    this.populateAsteroids();
   }
 
   var img = new Image();
   img.src = 'space.jpg';
 
-  Game.prototype.addAsteroids = function(numAsteroids) {
-    for (var i = 0; i < numAsteroids; i++) {
-      var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
+  Game.prototype.asteroidValue = function() {
+    var sum = 0;
+    this.asteroids.forEach(function(asteroid) {
+      sum += asteroid.score;
+    })
+    return sum;
+  }
+
+  // Takes an options has of 'limit' and 'type'
+  Game.prototype.populateAsteroids = function(o) {
+    (o || (o = {})) // Default to an empty object
+
+    while (this.asteroidValue() < (o.limit || this.asteroidLimit)) {
+      var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y, o.type)
       newAsteroid.game = this;
       this.asteroids.push(newAsteroid);
     }
   }
+
+  // In practice identical to above, just less work.
+  // Can probably remove it later on.
+  // Game.prototype.addAsteroids = function(numAsteroids) {
+  //   for (var i = 0; i < numAsteroids; i++) {
+  //     var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
+  //     newAsteroid.game = this;
+  //     this.asteroids.push(newAsteroid);
+  //   }
+  // }
 
   Game.prototype.removeAsteroid = function(asteroid) {
     var that = this;
