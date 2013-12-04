@@ -14,7 +14,7 @@
     // this.addAsteroids(10);
     // asteroid limit is in 'points'. A regular one is worth 15.
     this.asteroidLimit = 150;
-    this.populateAsteroids();
+    this.populateAsteroids({type: 'random'});
   }
 
   var img = new Image();
@@ -33,7 +33,7 @@
     (o || (o = {})) // Default to an empty object
 
     while (this.asteroidValue() < (o.limit || this.asteroidLimit)) {
-      var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y, o.type)
+      var newAsteroid = Asteroids.Asteroid.replacementAsteroid(o.type)
       newAsteroid.game = this;
       this.asteroids.push(newAsteroid);
     }

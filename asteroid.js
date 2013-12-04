@@ -17,6 +17,13 @@
       hp: 2,
       child: 0
     },
+    fast: {
+      color: "cyan",
+      radius: 10,
+      score: 40,
+      hp: 2,
+      child: 0
+    },
     medium: {
       color: "brown",
       radius: 15,
@@ -47,23 +54,38 @@
 
   // TODO: Add a speedUp ratio to the calculations
   // Adds an asteroid at a random location on the canvas
-  Asteroid.randomAsteroid = function(dimX, dimY) {
+  Asteroid.randomAsteroid = function(dimX, dimY, type) {
+    (type || (type = 'medium')) // Default to medium asteroid
+
+    if (type === 'random') {
+      var types = Object.keys(Asteroid.defaults)
+      // We're skipping the first two asteroid types, as they're special
+      // ('small' is only created when an asteroid dies, 'fast' is only
+      // created when it's manually aimed at the ship)
+      var i = Math.floor((types.length - 2) * Math.random()) + 2
+      type = types[i]
+    }
+
+    var asteroidType = Asteroid.defaults[type]
+
     var startPos = Asteroids.randomPosition(dimX, dimY, 1);
     var startVel = Asteroids.randomVelocity(
       Asteroids.randomVector(),
       Asteroids.RATE / 16,
       Asteroids.RATE / 32
       );
-    var newAsteroid = new Asteroid(startPos, startVel, Asteroid.defaults.medium);
+    var newAsteroid = new Asteroid(startPos, startVel, asteroidType);
     newAsteroid.placeOffScreen();
     return newAsteroid;
   }
 
   // Adds an asteroid at a random location just barely off the canvas
-  Asteroid.replacementAsteroid = function() {
-    var dimX = Asteroids.DIM_X, dimY = Asteroids.DIM_Y;
-    var newAsteroid = Asteroid.randomAsteroid(dimX, dimY);
+  Asteroid.replacementAsteroid = function(type) {
+    (type || (type = 'medium')) // Default to medium asteroid
 
+    var dimX = Asteroids.DIM_X, dimY = Asteroids.DIM_Y;
+    var newAsteroid = Asteroid.randomAsteroid(dimX, dimY, type);
+    return newAsteroid;
   }
 
   Asteroid.prototype.break = function() {
