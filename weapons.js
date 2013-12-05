@@ -10,6 +10,8 @@
     this.radius = 20;
   }
 
+  Weapon.inherits(Asteroids.MovingObject);
+
   Weapon.STANDARD = {
     cooldown: Math.floor(300 / Asteroids.RATE),
     speed: Asteroids.RATE * 500 / 1000,
@@ -50,6 +52,12 @@
     }
   }
 
+  // This will be the list of valid pickups... STANDARD obviously comes
+  // with the ship, and BOMB isn't working at the moment.
+  Weapon.pickups = [
+    Weapon.FIRE
+  ]
+
   Weapon.prototype.draw = function(ctx) {
     var weapon = this;
 
@@ -62,6 +70,8 @@
     ctx.closePath();
     ctx.fill();
   }
+
+  Weapon.prototype.move = function() {} // Noop. Weapons are too lethargic to move.
 
   // Given the heading of the ship, and its velocity, returns the velocity of a new
   // bullet fired from the ship.
