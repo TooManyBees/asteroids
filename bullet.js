@@ -20,15 +20,4 @@
     }
   }
 
-  Bullet.prototype.hitAsteroids = function() {
-    var bullet = this;
-    this.game.asteroids.forEach(function(asteroid) {
-      if (asteroid.isCollidedWith(bullet)) {
-        // bullet.game.removeAsteroid(asteroid);
-        asteroid.takeDamage(bullet.damage);
-        bullet.game.removeBullet(bullet);
-      }
-    });
-  }
-
 })(this);

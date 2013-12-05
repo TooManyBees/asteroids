@@ -58,16 +58,6 @@
     this.asteroids.push(aimedAsteroid);
   }
 
-  // In practice identical to above, just less work.
-  // Can probably remove it later on.
-  // Game.prototype.addAsteroids = function(numAsteroids) {
-  //   for (var i = 0; i < numAsteroids; i++) {
-  //     var newAsteroid = Asteroids.Asteroid.randomAsteroid(Asteroids.DIM_X, Asteroids.DIM_Y)
-  //     newAsteroid.game = this;
-  //     this.asteroids.push(newAsteroid);
-  //   }
-  // }
-
   Game.prototype.addRandomPickup = function(pos) {
     this.pickups.push(
       // while there's just 1 working weapon, hardcoded it in
@@ -98,7 +88,12 @@
   }
 
   Game.prototype.removeBullet = function(bullet) {
-    var index = this.bullets.indexOf(bullet);
+    var index;
+    if (typeof bullet === 'number')
+      index = bullet;
+    else
+      index = this.bullets.indexOf(bullet);
+
     this.bullets.splice(index, 1);
   }
 
@@ -149,15 +144,20 @@
   Game.prototype.checkCollisions = function () {
     var that = this;
     this.asteroids.forEach(function(asteroid) {
+      for (var i = 0; i < that.bullets.length; i++) {
+        if (asteroid.isCollidedWith(that.bullets[i])) {
+          asteroid.takeDamage(that.bullets[i].damage);
+          that.removeBullet(i);
+          i--
+        }
+      };
+
       if (that.ship.isCollidedWith(asteroid)) {
-        // asteroid.bounce()
         that.ship.die();
         that.score -= 20;
       }
     });
 
-    // FYI Pickups probably won't have their own isCollidedWith method
-    // but they do have a pos field
     this.pickups.forEach(function(pickup) {
       if (that.ship.isCollidedWith(pickup)) {
         pickup.pickedUpBy(that.ship);
@@ -165,9 +165,9 @@
       }
     });
 
-    this.bullets.forEach(function(bullet) {
-      bullet.hitAsteroids();
-    });
+    // this.bullets.forEach(function(bullet) {
+    //   bullet.hitAsteroids();
+    // });
   }
 
   Game.prototype.fireBullet = function () {
