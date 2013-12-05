@@ -225,6 +225,17 @@
     this.paused = true;
   }
 
+  // Can't be unpaused. Called prior to deleting and restarting the game
+  Game.prototype.end = function() {
+    clearInterval(this.timer);
+    this.paused = true;
+    key.unbind('`');
+    key.unbind('space');
+    key.unbind('a');
+    key.unbind('w');
+    key.unbind('d');
+  }
+
   Game.prototype.togglePause = function() {
     if (this.paused) {
       this.resume();

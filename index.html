@@ -53,7 +53,7 @@
 
   var newGame = function() {
     if (window.game) {
-      game.stop();
+      window.game.end();
       delete window.game
     }
     game = new Asteroids.Game(canvas.getContext('2d'));
