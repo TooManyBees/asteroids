@@ -24,7 +24,7 @@
     this.ship = new Asteroids.Ship([Asteroids.DIM_X / 2, Asteroids.DIM_Y / 2],[0,0]);
     // asteroid limit is in 'points'. A regular one is worth 15.
     this.fieldValue = 0
-    this.fieldLimit = 150;
+    this.fieldLimit = 100;
     this.populateAsteroids({type: 'random'});
   }
 
@@ -42,6 +42,8 @@
   // Takes an options has of 'limit' and 'type'
   Game.prototype.populateAsteroids = function(o) {
     (o || (o = {})) // Default to an empty object
+
+    console.log("Repopulating from "+ this.fieldValue +" to "+ this.fieldLimit +" points.")
 
     while (this.fieldValue < (o.limit || this.fieldLimit)) {
       var newAsteroid = Asteroids.Asteroid.replacementAsteroid(o.type)
@@ -82,6 +84,7 @@
         baby.game = that;
         baby.timers.mercy = Math.ceil(Asteroids.RATE / 2);
         that.asteroids.push(baby);
+        that.fieldValue += baby.score;
       });
     }
 
@@ -164,10 +167,6 @@
         that.removePickup(pickup);
       }
     });
-
-    // this.bullets.forEach(function(bullet) {
-    //   bullet.hitAsteroids();
-    // });
   }
 
   Game.prototype.fireBullet = function () {
