@@ -8,8 +8,8 @@
   }
 
   // Canvas size in pixels
-  Asteroids.DIM_X = 500;
-  Asteroids.DIM_Y = 500;
+  Asteroids.DIM_X = 600;
+  Asteroids.DIM_Y = 600;
   // Frame rate in milliseconds/frame
   Asteroids.RATE = 17;
   Asteroids.REPOPTIME = 15 * Asteroids.RATE;
