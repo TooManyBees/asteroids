@@ -54,6 +54,7 @@
   Game.prototype.aimAsteroid = function() {
     aimedAsteroid = Asteroids.Asteroid.replacementAsteroid('fast');
     aimedAsteroid.aim(this.ship);
+    aimedAsteroid.game = this;
     this.asteroids.push(aimedAsteroid);
   }
 
