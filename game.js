@@ -187,10 +187,10 @@
 
   Game.prototype.checkEndCondition = function() {
     if (this.asteroids.length <= 0) {
-      this.stop();
+      this.end();
       this.printEndMessage("You win.");
     } else if (this.ship.lives <= 0) {
-      this.stop();
+      this.end();
       this.printEndMessage("You lose.");
     }
   }
@@ -227,8 +227,7 @@
 
   // Can't be unpaused. Called prior to deleting and restarting the game
   Game.prototype.end = function() {
-    clearInterval(this.timer);
-    this.paused = true;
+    this.stop();
     key.unbind('`');
     key.unbind('space');
     key.unbind('a');
