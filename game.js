@@ -237,6 +237,7 @@
     // (so basically the pause button and that's it)
     var that = this;
     key('`', function(){ that.togglePause(); });
+    key('space', function(event) {event.preventDefault()});
   }
 
   Game.prototype.start = function() {
