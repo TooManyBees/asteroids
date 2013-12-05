@@ -72,11 +72,17 @@
 
   Game.prototype.removeAsteroid = function(asteroid) {
     var that = this;
+    var index;
     that.score += asteroid.score;
     that.fieldValue -= asteroid.score;
 
     var babies = asteroid.break();
-    var index = this.asteroids.indexOf(asteroid);
+
+    if (typeof asteroid === 'number')
+      index = asteroid;
+    else
+      index = this.asteroids.indexOf(asteroid);
+
     this.asteroids.splice(index, 1);
 
     if (babies.length > 0) {
