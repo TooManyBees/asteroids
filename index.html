@@ -42,17 +42,30 @@
     <li><code>A</code> <code>D</code> rotate</li>
     <li><code>SPACE</code> shoot</li>
     <li><code>`</code> pause</li>
+    <li><code>R</code> restart</li>
   </ul>
+
+  <a href="#" id="clicky">ROOOOOOOOIDS!</a>
   <script>
   var canvas = document.getElementById("canvas");
   canvas.setAttribute("width", Asteroids.DIM_X);
   canvas.setAttribute("height", Asteroids.DIM_Y);
 
-  var body = document.getElementsByTagName("body")[0];
-  // body.appendChild(canvas);
+  var newGame = function() {
+    if (window.game) {
+      game.stop();
+      delete window.game
+    }
+    game = new Asteroids.Game(canvas.getContext('2d'));
+    game.start();
+  }
 
-  game = new Asteroids.Game(canvas.getContext('2d'));
-  game.start();
+  var clickyBit = document.getElementById("clicky");
+  clickyBit.addEventListener("click", function() {
+    newGame();
+  })
+  key('r', newGame)
+
   </script>
 </body>
 </html>
