@@ -18,7 +18,7 @@
     bullet: {
       radius: 3,
       damage: 3,
-      color: 'green',
+      color: 'white',
       lifetime: Asteroids.RATE * 5
     }
   }

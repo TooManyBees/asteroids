@@ -28,8 +28,8 @@
     this.populateAsteroids({type: 'random'});
   }
 
-  // var img = new Image();
-  // img.src = 'space.jpg';
+  var img = new Image();
+  img.src = './graphics/space.jpg';
 
   Game.prototype.asteroidValue = function() {
     var sum = 0;
@@ -123,7 +123,7 @@
   Game.prototype.draw = function(){
     var that = this;
     this.ctx.clearRect(0, 0, Asteroids.DIM_X, Asteroids.DIM_Y);
-    // this.ctx.drawImage(img,0,0);
+    this.ctx.drawImage(img,0,0);
 
     this.asteroids.forEach (function(asteroid) {
       asteroid.draw(that.ctx);
